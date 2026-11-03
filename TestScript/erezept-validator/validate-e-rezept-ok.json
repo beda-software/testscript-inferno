@@ -1,0 +1,280 @@
+{
+  "resourceType": "TestScript",
+  "id": "validate-e-rezept-ok",
+  "url": "https://example.org/fhir/TestScript/validate-e-rezept-ok",
+  "name": "ValidateERezept_OK",
+  "status": "active",
+  "description": "Testet die Validierungsoperation $validate-e-rezept mit einem gültigen E-Rezept-Bundle.",
+  "fixture": [
+    {
+      "id": "example-request-001",
+      "autocreate": false,
+      "autodelete": false,
+      "resource": {
+        "reference": "/examples/Example_Request_001_minimum_excl_allergyIntolerance.json"
+      }
+    },
+    {
+      "id": "example-request-002",
+      "autocreate": false,
+      "autodelete": false,
+      "resource": {
+        "reference": "/examples/Example_Request_002_minimum_incl_allergyIntolerance_no_match.json"
+      }
+    },
+    {
+      "id": "example-request-004",
+      "autocreate": false,
+      "autodelete": false,
+      "resource": {
+        "reference": "/examples/Example_Request_004_incl_multiple_allergyIntolerance_no_match.json"
+      }
+    },
+    {
+      "id": "example-request-005",
+      "autocreate": false,
+      "autodelete": false,
+      "resource": {
+        "reference": "/examples/Example_Request_005_incl_multiple_allergyIntolerance_multiple_medications_no_match.json"
+      }
+    }
+  ],
+  "test": [
+    {
+      "name": "001 - Validiere gültiges E-Rezept-Bundle (ohne AllergyIntolerance)",
+      "action": [
+        {
+          "operation": {
+            "type": {
+              "code": "operation"
+            },
+            "description": "Führe $validate-e-rezept mit gültigem E-Rezept-Bundle (ohne AllergyIntolerance) aus",
+            "accept": "application/fhir+json",
+            "contentType": "application/fhir+json",
+            "sourceId": "example-request-001",
+            "params": "$validate-e-rezept",
+            "encodeRequestUrl": true
+          }
+        },
+        {
+          "assert": {
+            "description": "Response ist ein OperationOutcome",
+            "resource": "OperationOutcome",
+            "warningOnly": false
+          }
+        },
+        {
+          "assert": {
+            "description": "Response ist 'okay'",
+            "response": "okay",
+            "warningOnly": false
+          }
+        },
+        {
+          "assert": {
+            "description": "Issue Severity ist 'information'",
+            "path": "issue[0].severity",
+            "operator": "equals",
+            "value": "information",
+            "warningOnly": false
+          }
+        },
+        {
+          "assert": {
+            "description": "Issue Code ist 'informational'",
+            "path": "issue[0].code",
+            "operator": "equals",
+            "value": "informational",
+            "warningOnly": false
+          }
+        },
+        {
+          "assert": {
+            "description": "Details Text ist 'OK'",
+            "path": "issue[0].details.text",
+            "operator": "equals",
+            "value": "Das Rezept ist OK",
+            "warningOnly": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "002 - Validiere gültiges E-Rezept-Bundle (mit AllergyIntolerance)",
+      "action": [
+        {
+          "operation": {
+            "type": {
+              "code": "operation"
+            },
+            "description": "Führe $validate-e-rezept mit gültigem E-Rezept-Bundle (mit AllergyIntolerance) aus",
+            "accept": "application/fhir+json",
+            "contentType": "application/fhir+json",
+            "sourceId": "example-request-002",
+            "params": "$validate-e-rezept",
+            "encodeRequestUrl": true
+          }
+        },
+        {
+          "assert": {
+            "description": "Response ist ein OperationOutcome",
+            "resource": "OperationOutcome",
+            "warningOnly": false
+          }
+        },
+        {
+          "assert": {
+            "description": "Response ist 'okay'",
+            "response": "okay",
+            "warningOnly": false
+          }
+        },
+        {
+          "assert": {
+            "description": "Issue Severity ist 'information'",
+            "path": "issue[0].severity",
+            "operator": "equals",
+            "value": "information",
+            "warningOnly": false
+          }
+        },
+        {
+          "assert": {
+            "description": "Issue Code ist 'informational'",
+            "path": "issue[0].code",
+            "operator": "equals",
+            "value": "informational",
+            "warningOnly": false
+          }
+        },
+        {
+          "assert": {
+            "description": "Details Text ist 'OK'",
+            "path": "issue[0].details.text",
+            "operator": "equals",
+            "value": "Das Rezept ist OK",
+            "warningOnly": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "004 - Validiere gültiges E-Rezept-Bundle (mit mehreren AllergyIntolerances)",
+      "action": [
+        {
+          "operation": {
+            "type": {
+              "code": "operation"
+            },
+            "description": "Führe $validate-e-rezept mit gültigem E-Rezept-Bundle (mit mehreren AllergyIntolerances) aus",
+            "accept": "application/fhir+json",
+            "contentType": "application/fhir+json",
+            "sourceId": "example-request-004",
+            "params": "$validate-e-rezept",
+            "encodeRequestUrl": true
+          }
+        },
+        {
+          "assert": {
+            "description": "Response ist ein OperationOutcome",
+            "resource": "OperationOutcome",
+            "warningOnly": false
+          }
+        },
+        {
+          "assert": {
+            "description": "Response ist 'okay'",
+            "response": "okay",
+            "warningOnly": false
+          }
+        },
+        {
+          "assert": {
+            "description": "Issue Severity ist 'information'",
+            "path": "issue[0].severity",
+            "operator": "equals",
+            "value": "information",
+            "warningOnly": false
+          }
+        },
+        {
+          "assert": {
+            "description": "Issue Code ist 'informational'",
+            "path": "issue[0].code",
+            "operator": "equals",
+            "value": "informational",
+            "warningOnly": false
+          }
+        },
+        {
+          "assert": {
+            "description": "Details Text ist 'OK'",
+            "path": "issue[0].details.text",
+            "operator": "equals",
+            "value": "Das Rezept ist OK",
+            "warningOnly": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "005 - Validiere gültiges E-Rezept-Bundle (mit mehreren AllergyIntolerances und mehreren verschriebene Medikamenten)",
+      "action": [
+        {
+          "operation": {
+            "type": {
+              "code": "operation"
+            },
+            "description": "Führe $validate-e-rezept mit gültigem E-Rezept-Bundle (mit mehreren AllergyIntolerances und mehreren verschriebenen Medikamenten) aus",
+            "accept": "application/fhir+json",
+            "contentType": "application/fhir+json",
+            "sourceId": "example-request-005",
+            "params": "$validate-e-rezept",
+            "encodeRequestUrl": true
+          }
+        },
+        {
+          "assert": {
+            "description": "Response ist ein OperationOutcome",
+            "resource": "OperationOutcome",
+            "warningOnly": false
+          }
+        },
+        {
+          "assert": {
+            "description": "Response ist 'okay'",
+            "response": "okay",
+            "warningOnly": false
+          }
+        },
+        {
+          "assert": {
+            "description": "Issue Severity ist 'information'",
+            "path": "issue[0].severity",
+            "operator": "equals",
+            "value": "information",
+            "warningOnly": false
+          }
+        },
+        {
+          "assert": {
+            "description": "Issue Code ist 'informational'",
+            "path": "issue[0].code",
+            "operator": "equals",
+            "value": "informational",
+            "warningOnly": false
+          }
+        },
+        {
+          "assert": {
+            "description": "Details Text ist 'OK'",
+            "path": "issue[0].details.text",
+            "operator": "equals",
+            "value": "Das Rezept ist OK",
+            "warningOnly": false
+          }
+        }
+      ]
+    }
+  ]
+}

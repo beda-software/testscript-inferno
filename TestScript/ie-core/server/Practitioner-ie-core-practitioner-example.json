@@ -1,0 +1,78 @@
+{
+  "resourceType": "Practitioner",
+  "id": "ie-core-practitioner-example",
+  "meta": {
+    "profile": [
+      "https://hl7-ie.github.io/ie-core/fhir/ie/core/StructureDefinition/ie-core-practitioner"
+    ]
+  },
+  "identifier": [
+    {
+      "system": "https://hl7-ie.github.io/ie-core/fhir/ie/core/sid/imc",
+      "type": {
+        "coding": [
+          {
+            "code": "MD",
+            "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+            "display": "Medical License number"
+          }
+        ]
+      },
+      "value": "IMC-12345"
+    }
+  ],
+  "active": true,
+  "name": [
+    {
+      "use": "official",
+      "family": "O'Brien",
+      "given": [
+        "Sarah"
+      ],
+      "prefix": [
+        "Dr."
+      ]
+    }
+  ],
+  "gender": "female",
+  "telecom": [
+    {
+      "system": "phone",
+      "value": "+353 1 410 3456",
+      "use": "work"
+    },
+    {
+      "system": "email",
+      "value": "sarah.obrien@sjh.ie",
+      "use": "work"
+    }
+  ],
+  "address": [
+    {
+      "use": "work",
+      "line": [
+        "James's Street"
+      ],
+      "city": "Dublin",
+      "state": "Dublin",
+      "postalCode": "D08 NHY1",
+      "country": "IE"
+    }
+  ],
+  "qualification": [
+    {
+      "code": {
+        "coding": [
+          {
+            "code": "309343006",
+            "system": "http://snomed.info/sct",
+            "display": "Physician"
+          }
+        ]
+      },
+      "issuer": {
+        "display": "Irish Medical Council"
+      }
+    }
+  ]
+}

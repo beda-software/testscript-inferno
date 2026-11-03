@@ -1,0 +1,232 @@
+{
+  "resourceType": "TestScript",
+  "id": "RDSP-Simulator",
+  "text": {
+    "status": "extensions",
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: TestScript RDSP-Simulator</b></p><a name=\"RDSP-Simulator\"> </a><a name=\"hcRDSP-Simulator\"> </a><p><b>StructureDefinition Work Group</b>: ii</p><p><b>url</b>: <a href=\"TestScript-RDSP-Simulator.html\">TestScript TestScript_RDSP_Simulator</a></p><p><b>version</b>: 1.0.0</p><p><b>name</b>: TestScript_RDSP_Simulator</p><p><b>status</b>: Active</p><p><b>date</b>: 2021-07-17</p><p><b>publisher</b>: HL7 International / Imaging Integration</p><p><b>contact</b>: <a href=\"http://www.hl7.org/Special/committees/imagemgt\">http://www.hl7.org/Special/committees/imagemgt</a>, HL7 Imaging Integration Workgroup: <a href=\"http://www.hl7.org/Special/committees/imagemgt\">http://www.hl7.org/Special/committees/imagemgt</a>, Abderrazek Boufahja: <a href=\"mailto:abderrazek.boufahja@gehealthcare.com\">abderrazek.boufahja@gehealthcare.com</a></p><p><b>description</b>: </p><div><p>TestScript to validate the FHIR Server capabilities against an RDSP actor.</p>\n</div><p><b>jurisdiction</b>: <span title=\"Codes:{http://unstats.un.org/unsd/methods/m49/m49.htm 001}\">Global (Whole world)</span></p><p><b>copyright</b>: </p><div><p>HL7 2021</p>\n</div><h3>Destinations</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Index</b></td><td><b>Profile</b></td></tr><tr><td style=\"display: none\">*</td><td>1</td><td><a href=\"http://terminology.hl7.org/7.1.0/CodeSystem-testscript-profile-destination-types.html#testscript-profile-destination-types-FHIR-Server\">Test script profile destination type: FHIR-Server</a> (FHIR Server)</td></tr></table><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>rds-post-json</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p><p><b>resource</b>: <a href=\"Bundle-Bundle-RDS-resources.html\">Bundle: type = transaction</a></p></blockquote><blockquote><p><b>variable</b></p><p><b>name</b>: rdsResourceId</p><p><b>path</b>: Bundle/entry/resource/Observation/id</p><p><b>sourceId</b>: bundle-post-response</p></blockquote><blockquote><p><b>variable</b></p><p><b>name</b>: patientResourceId</p><p><b>path</b>: Bundle/entry/resource/Patient/id</p><p><b>sourceId</b>: bundle-post-response</p></blockquote><blockquote><p><b>variable</b></p><p><b>name</b>: deviceResourceId</p><p><b>path</b>: Bundle/entry/resource/Device/id</p><p><b>sourceId</b>: bundle-post-response</p></blockquote><blockquote><p><b>variable</b></p><p><b>name</b>: practitionerResourceId</p><p><b>path</b>: Bundle/entry/resource/Practitioner/id</p><p><b>sourceId</b>: bundle-post-response</p></blockquote><blockquote><p><b>variable</b></p><p><b>name</b>: imagingStudyResourceId</p><p><b>path</b>: Bundle/entry/resource/ImagingStudy/id</p><p><b>sourceId</b>: bundle-post-response</p></blockquote><blockquote><p><b>test</b></p><p><b>name</b>: RDS-Queries-verification-POST</p><p><b>description</b>: This is a Test to validate the FHIR server capabilities according to Radiation Dose Summary searching possibilities.</p><blockquote><p><b>action</b></p><h3>Operations</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Type</b></td><td><b>Description</b></td><td><b>Accept</b></td><td><b>ContentType</b></td><td><b>Destination</b></td><td><b>EncodeRequestUrl</b></td><td><b>ResponseId</b></td><td><b>SourceId</b></td></tr><tr><td style=\"display: none\">*</td><td><a href=\"http://terminology.hl7.org/7.1.0/CodeSystem-testscript-operation-codes.html#testscript-operation-codes-transaction\">Test script operation code: transaction</a> (Transaction)</td><td>Submit a bundle of resources creating the radiation dose summary</td><td>json</td><td>json</td><td>1</td><td>true</td><td>bundle-post-response</td><td>rds-post-json</td></tr></table></blockquote><blockquote><p><b>action</b></p><h3>Asserts</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Description</b></td><td><b>Direction</b></td><td><b>Operator</b></td><td><b>ResponseCode</b></td><td><b>WarningOnly</b></td></tr><tr><td style=\"display: none\">*</td><td>Confirm that the returned HTTP status is 200(OK) or 201(Created).</td><td>response</td><td>in</td><td>200,201</td><td>false</td></tr></table></blockquote><blockquote><p><b>action</b></p><h3>Asserts</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Description</b></td><td><b>Direction</b></td><td><b>Resource</b></td><td><b>WarningOnly</b></td></tr><tr><td style=\"display: none\">*</td><td>Confirm that the response body contains a Bundle</td><td>response</td><td>Bundle</td><td>false</td></tr></table></blockquote></blockquote><blockquote><p><b>test</b></p><p><b>name</b>: RDS-Queries-verification-read</p><p><b>description</b>: Read the posted Observation as a Radiation Dose Summary resource</p><blockquote><p><b>action</b></p><h3>Operations</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Type</b></td><td><b>Resource</b></td><td><b>Description</b></td><td><b>Accept</b></td><td><b>EncodeRequestUrl</b></td><td><b>Params</b></td><td><b>ResponseId</b></td></tr><tr><td style=\"display: none\">*</td><td><a href=\"http://terminology.hl7.org/7.1.0/CodeSystem-testscript-operation-codes.html#testscript-operation-codes-read\">Test script operation code: read</a> (Read)</td><td>Observation</td><td>Read the Observation ${rdsResourceId}</td><td>json</td><td>true</td><td>/${rdsResourceId}</td><td>rds-read-response</td></tr></table></blockquote><blockquote><p><b>action</b></p><h3>Asserts</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Description</b></td><td><b>Direction</b></td><td><b>Operator</b></td><td><b>ResponseCode</b></td><td><b>WarningOnly</b></td></tr><tr><td style=\"display: none\">*</td><td>Confirm that the returned HTTP status is 200(OK) or 201(Created).</td><td>response</td><td>in</td><td>200,201</td><td>false</td></tr></table></blockquote></blockquote><blockquote><p><b>teardown</b></p><blockquote><p><b>action</b></p><h3>Operations</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Type</b></td><td><b>Resource</b></td><td><b>Description</b></td><td><b>Accept</b></td><td><b>EncodeRequestUrl</b></td><td><b>Params</b></td></tr><tr><td style=\"display: none\">*</td><td><a href=\"http://terminology.hl7.org/7.1.0/CodeSystem-testscript-operation-codes.html#testscript-operation-codes-delete\">Test script operation code: delete</a> (Delete)</td><td>Observation</td><td>Relete the Observation ${rdsResourceId}</td><td>json</td><td>true</td><td>/${rdsResourceId}</td></tr></table></blockquote><blockquote><p><b>action</b></p><h3>Operations</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Type</b></td><td><b>Resource</b></td><td><b>Description</b></td><td><b>Accept</b></td><td><b>EncodeRequestUrl</b></td><td><b>Params</b></td></tr><tr><td style=\"display: none\">*</td><td><a href=\"http://terminology.hl7.org/7.1.0/CodeSystem-testscript-operation-codes.html#testscript-operation-codes-delete\">Test script operation code: delete</a> (Delete)</td><td>ImagingStudy</td><td>Relete the ImagingStudy ${imagingStudyResourceId}</td><td>json</td><td>true</td><td>/${imagingStudyResourceId}</td></tr></table></blockquote><blockquote><p><b>action</b></p><h3>Operations</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Type</b></td><td><b>Resource</b></td><td><b>Description</b></td><td><b>Accept</b></td><td><b>EncodeRequestUrl</b></td><td><b>Params</b></td></tr><tr><td style=\"display: none\">*</td><td><a href=\"http://terminology.hl7.org/7.1.0/CodeSystem-testscript-operation-codes.html#testscript-operation-codes-delete\">Test script operation code: delete</a> (Delete)</td><td>Patient</td><td>Relete the Patient ${patientResourceId}</td><td>json</td><td>true</td><td>/${patientResourceId}</td></tr></table></blockquote><blockquote><p><b>action</b></p><h3>Operations</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Type</b></td><td><b>Resource</b></td><td><b>Description</b></td><td><b>Accept</b></td><td><b>EncodeRequestUrl</b></td><td><b>Params</b></td></tr><tr><td style=\"display: none\">*</td><td><a href=\"http://terminology.hl7.org/7.1.0/CodeSystem-testscript-operation-codes.html#testscript-operation-codes-delete\">Test script operation code: delete</a> (Delete)</td><td>Practitioner</td><td>Relete the Practitioner ${practitionerResourceId}</td><td>json</td><td>true</td><td>/${practitionerResourceId}</td></tr></table></blockquote></blockquote></div>"
+  },
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-wg",
+      "valueCode": "ii"
+    }
+  ],
+  "url": "http://hl7.org/fhir/uv/radiation-dose-summary/TestScript/RDSP-Simulator",
+  "version": "1.0.0",
+  "name": "TestScript_RDSP_Simulator",
+  "status": "active",
+  "date": "2021-07-17",
+  "publisher": "HL7 International / Imaging Integration",
+  "contact": [
+    {
+      "telecom": [
+        {
+          "system": "url",
+          "value": "http://www.hl7.org/Special/committees/imagemgt"
+        }
+      ]
+    },
+    {
+      "name": "HL7 Imaging Integration Workgroup",
+      "telecom": [
+        {
+          "system": "url",
+          "value": "http://www.hl7.org/Special/committees/imagemgt"
+        }
+      ]
+    },
+    {
+      "name": "Abderrazek Boufahja",
+      "telecom": [
+        {
+          "system": "email",
+          "value": "abderrazek.boufahja@gehealthcare.com"
+        }
+      ]
+    }
+  ],
+  "description": "TestScript to validate the FHIR Server capabilities against an RDSP actor.",
+  "jurisdiction": [
+    {
+      "coding": [
+        {
+          "system": "http://unstats.un.org/unsd/methods/m49/m49.htm",
+          "code": "001"
+        }
+      ]
+    }
+  ],
+  "copyright": "HL7 2021",
+  "destination": [
+    {
+      "index": 1,
+      "profile": {
+        "system": "http://terminology.hl7.org/CodeSystem/testscript-profile-destination-types",
+        "code": "FHIR-Server",
+        "display": "FHIR Server"
+      }
+    }
+  ],
+  "fixture": [
+    {
+      "id": "rds-post-json",
+      "autocreate": false,
+      "autodelete": false,
+      "resource": {
+        "reference": "/server/Bundle-Bundle-RDS-resources.json"
+      }
+    }
+  ],
+  "variable": [
+    {
+      "name": "rdsResourceId",
+      "path": "Bundle/entry/resource/Observation/id",
+      "sourceId": "bundle-post-response"
+    },
+    {
+      "name": "patientResourceId",
+      "path": "Bundle/entry/resource/Patient/id",
+      "sourceId": "bundle-post-response"
+    },
+    {
+      "name": "deviceResourceId",
+      "path": "Bundle/entry/resource/Device/id",
+      "sourceId": "bundle-post-response"
+    },
+    {
+      "name": "practitionerResourceId",
+      "path": "Bundle/entry/resource/Practitioner/id",
+      "sourceId": "bundle-post-response"
+    },
+    {
+      "name": "imagingStudyResourceId",
+      "path": "Bundle/entry/resource/ImagingStudy/id",
+      "sourceId": "bundle-post-response"
+    }
+  ],
+  "test": [
+    {
+      "name": "RDS-Queries-verification-POST",
+      "description": "This is a Test to validate the FHIR server capabilities according to Radiation Dose Summary searching possibilities.",
+      "action": [
+        {
+          "operation": {
+            "type": {
+              "system": "http://terminology.hl7.org/CodeSystem/testscript-operation-codes",
+              "code": "transaction"
+            },
+            "description": "Submit a bundle of resources creating the radiation dose summary",
+            "accept": "json",
+            "contentType": "json",
+            "destination": 1,
+            "encodeRequestUrl": true,
+            "responseId": "bundle-post-response",
+            "sourceId": "rds-post-json"
+          }
+        },
+        {
+          "assert": {
+            "description": "Confirm that the returned HTTP status is 200(OK) or 201(Created).",
+            "direction": "response",
+            "operator": "in",
+            "responseCode": "200,201",
+            "warningOnly": false
+          }
+        },
+        {
+          "assert": {
+            "description": "Confirm that the response body contains a Bundle",
+            "direction": "response",
+            "resource": "Bundle",
+            "warningOnly": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "RDS-Queries-verification-read",
+      "description": "Read the posted Observation as a Radiation Dose Summary resource",
+      "action": [
+        {
+          "operation": {
+            "type": {
+              "system": "http://terminology.hl7.org/CodeSystem/testscript-operation-codes",
+              "code": "read"
+            },
+            "resource": "Observation",
+            "description": "Read the Observation ${rdsResourceId}",
+            "accept": "json",
+            "encodeRequestUrl": true,
+            "params": "/${rdsResourceId}",
+            "responseId": "rds-read-response"
+          }
+        },
+        {
+          "assert": {
+            "description": "Confirm that the returned HTTP status is 200(OK) or 201(Created).",
+            "direction": "response",
+            "operator": "in",
+            "responseCode": "200,201",
+            "warningOnly": false
+          }
+        }
+      ]
+    }
+  ],
+  "teardown": {
+    "action": [
+      {
+        "operation": {
+          "type": {
+            "system": "http://terminology.hl7.org/CodeSystem/testscript-operation-codes",
+            "code": "delete"
+          },
+          "resource": "Observation",
+          "description": "Relete the Observation ${rdsResourceId}",
+          "accept": "json",
+          "encodeRequestUrl": true,
+          "params": "/${rdsResourceId}"
+        }
+      },
+      {
+        "operation": {
+          "type": {
+            "system": "http://terminology.hl7.org/CodeSystem/testscript-operation-codes",
+            "code": "delete"
+          },
+          "resource": "ImagingStudy",
+          "description": "Relete the ImagingStudy ${imagingStudyResourceId}",
+          "accept": "json",
+          "encodeRequestUrl": true,
+          "params": "/${imagingStudyResourceId}"
+        }
+      },
+      {
+        "operation": {
+          "type": {
+            "system": "http://terminology.hl7.org/CodeSystem/testscript-operation-codes",
+            "code": "delete"
+          },
+          "resource": "Patient",
+          "description": "Relete the Patient ${patientResourceId}",
+          "accept": "json",
+          "encodeRequestUrl": true,
+          "params": "/${patientResourceId}"
+        }
+      },
+      {
+        "operation": {
+          "type": {
+            "system": "http://terminology.hl7.org/CodeSystem/testscript-operation-codes",
+            "code": "delete"
+          },
+          "resource": "Practitioner",
+          "description": "Relete the Practitioner ${practitionerResourceId}",
+          "accept": "json",
+          "encodeRequestUrl": true,
+          "params": "/${practitionerResourceId}"
+        }
+      }
+    ]
+  }
+}

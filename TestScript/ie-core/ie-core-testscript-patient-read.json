@@ -1,0 +1,94 @@
+{
+  "resourceType": "TestScript",
+  "id": "ie-core-testscript-patient-read",
+  "url": "https://hl7-ie.github.io/ie-core/fhir/ie/core/TestScript/ie-core-testscript-patient-read",
+  "version": "0.2.0",
+  "name": "IECoreTestScriptPatientRead",
+  "title": "IE Core TestScript: Patient Read",
+  "status": "draft",
+  "date": "2025-01-01",
+  "publisher": "IE Core (Proof of Concept by Nithin Mohan T K)",
+  "description": "Verifies that a FHIR server can return a Patient resource conforming to the IE Core Patient profile.",
+  "fixture": [
+    {
+      "id": "server-Practitioner-ie-core-practitioner-example",
+      "autocreate": true,
+      "autodelete": true,
+      "resource": {
+        "reference": "/server/Practitioner-ie-core-practitioner-example.json"
+      }
+    },
+    {
+      "id": "server-Organization-ie-core-organization-example",
+      "autocreate": true,
+      "autodelete": true,
+      "resource": {
+        "reference": "/server/Organization-ie-core-organization-example.json"
+      }
+    },
+    {
+      "id": "patient-fixture",
+      "autocreate": true,
+      "autodelete": true,
+      "resource": {
+        "reference": "/server/Patient-ie-core-patient-example.json"
+      }
+    }
+  ],
+  "test": [
+    {
+      "name": "Patient Read Test",
+      "description": "Read a Patient and verify it conforms to the IE Core Patient profile.",
+      "action": [
+        {
+          "operation": {
+            "type": {
+              "system": "http://terminology.hl7.org/CodeSystem/testscript-operation-codes",
+              "code": "read"
+            },
+            "resource": "Patient",
+            "description": "Read the Patient resource",
+            "accept": "json",
+            "encodeRequestUrl": true,
+            "params": "/ie-core-patient-example"
+          }
+        },
+        {
+          "assert": {
+            "description": "Confirm the response is HTTP 200 OK",
+            "response": "okay",
+            "warningOnly": false
+          }
+        },
+        {
+          "assert": {
+            "description": "Confirm the returned resource is a Patient",
+            "resource": "Patient",
+            "warningOnly": false
+          }
+        },
+        {
+          "assert": {
+            "description": "Confirm Patient has the IE Core Patient profile",
+            "expression": "meta.profile.where($this = 'https://hl7-ie.github.io/ie-core/fhir/ie/core/StructureDefinition/ie-core-patient').exists()",
+            "warningOnly": false
+          }
+        },
+        {
+          "assert": {
+            "description": "Confirm Patient has at least one name",
+            "expression": "name.count() >= 1",
+            "warningOnly": false
+          }
+        },
+        {
+          "assert": {
+            "description": "Confirm Patient has a gender",
+            "expression": "gender.exists()",
+            "warningOnly": false
+          }
+        }
+      ]
+    }
+  ]
+}

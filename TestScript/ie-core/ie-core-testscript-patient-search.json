@@ -1,0 +1,106 @@
+{
+  "resourceType": "TestScript",
+  "id": "ie-core-testscript-patient-search",
+  "url": "https://hl7-ie.github.io/ie-core/fhir/ie/core/TestScript/ie-core-testscript-patient-search",
+  "version": "0.2.0",
+  "name": "IECoreTestScriptPatientSearch",
+  "title": "IE Core TestScript: Patient Search",
+  "status": "draft",
+  "date": "2025-01-01",
+  "publisher": "IE Core (Proof of Concept by Nithin Mohan T K)",
+  "description": "Verifies that a FHIR server supports searching for Patient resources by name, identifier, and birthdate.",
+  "test": [
+    {
+      "name": "Patient Search by Name",
+      "description": "Search for a Patient by family name.",
+      "action": [
+        {
+          "operation": {
+            "type": {
+              "system": "http://terminology.hl7.org/CodeSystem/testscript-operation-codes",
+              "code": "search"
+            },
+            "resource": "Patient",
+            "description": "Search for Patients by family name",
+            "accept": "json",
+            "encodeRequestUrl": true,
+            "params": "?family=Murphy"
+          }
+        },
+        {
+          "assert": {
+            "description": "Confirm the response is HTTP 200 OK",
+            "response": "okay",
+            "warningOnly": false
+          }
+        },
+        {
+          "assert": {
+            "description": "Confirm the response is a Bundle",
+            "resource": "Bundle",
+            "warningOnly": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "Patient Search by IHI",
+      "description": "Search for a Patient by IHI (Individual Health Identifier).",
+      "action": [
+        {
+          "operation": {
+            "type": {
+              "system": "http://terminology.hl7.org/CodeSystem/testscript-operation-codes",
+              "code": "search"
+            },
+            "resource": "Patient",
+            "description": "Search for Patients by IHI",
+            "accept": "json",
+            "encodeRequestUrl": true,
+            "params": "?identifier=https://hl7-ie.github.io/ie-core/fhir/ie/core/sid/ihi|210000000012345678"
+          }
+        },
+        {
+          "assert": {
+            "description": "Confirm the response is HTTP 200 OK",
+            "response": "okay",
+            "warningOnly": false
+          }
+        },
+        {
+          "assert": {
+            "description": "Confirm the response is a Bundle",
+            "resource": "Bundle",
+            "warningOnly": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "Patient Search by Birthdate",
+      "description": "Search for a Patient by date of birth.",
+      "action": [
+        {
+          "operation": {
+            "type": {
+              "system": "http://terminology.hl7.org/CodeSystem/testscript-operation-codes",
+              "code": "search"
+            },
+            "resource": "Patient",
+            "description": "Search for Patients by birthdate",
+            "accept": "json",
+            "encodeRequestUrl": true,
+            "params": "?birthdate=1978-05-15"
+          }
+        },
+        {
+          "assert": {
+            "description": "Confirm the response is HTTP 200 OK",
+            "response": "okay",
+            "warningOnly": false
+          }
+        }
+      ]
+    }
+  ]
+}

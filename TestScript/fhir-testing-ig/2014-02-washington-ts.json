@@ -1,0 +1,541 @@
+{
+  "resourceType": "TestScript",
+  "resourceDefinition": "http://hl7.org/fhir/StructureDefinition/TestScript|0.1.0-snapshot1",
+  "id": "2014-02-washington-ts",
+  "text": {
+    "status": "generated",
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: TestScript 2014-02-washington-ts</b></p><a name=\"2014-02-washington-ts\"> </a><a name=\"hc2014-02-washington-ts\"> </a><p><b>url</b>: <a href=\"http://hl7.org/fhir/TestScript/2014-02-washington-ts\">http://hl7.org/fhir/TestScript/2014-02-washington-ts</a></p><p><b>identifier</b>: <a href=\"http://terminology.hl7.org/7.1.0/NamingSystem-uri.html\" title=\"As defined by RFC 3986 (http://www.ietf.org/rfc/rfc3986.txt)(with many schemes defined in many RFCs). For OIDs and UUIDs, use the URN form (urn:oid:(note: lowercase) and urn:uuid:). See http://www.ietf.org/rfc/rfc3001.txt and http://www.ietf.org/rfc/rfc4122.txt \r\n\r\nThis oid is used as an identifier II.root to indicate the the extension is an absolute URI (technically, an IRI). Typically, this is used for OIDs and GUIDs. Note that when this OID is used with OIDs and GUIDs, the II.extension should start with urn:oid or urn:uuid: \r\n\r\nNote that this OID is created to aid with interconversion between CDA and FHIR - FHIR uses urn:ietf:rfc:3986 as equivalent to this OID. URIs as identifiers appear more commonly in FHIR.\r\n\r\nThis OID may also be used in CD.codeSystem.\">Uniform Resource Identifier (URI)</a>/urn:oid:2.16.840.1.113883.4.642.12.7</p><p><b>version</b>: 1.0</p><p><b>name</b>: TerminologyConnectathon1TestScript</p><p><b>title</b>: Terminology Connectathon #1 Test Script</p><p><b>status</b>: Draft</p><p><b>publisher</b>: HL7 International / FHIR Infrastructure</p><p><b>description</b>: </p><div><p>This is the test script the 1st Terminology Services Connectathon</p>\n</div><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>extensional-case-1</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>extensional-case-2</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>extensional-case-3</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>extensional-case-4</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>intensional-case-1</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>intensional-case-2</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>intensional-case-3</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>test1-1-min</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>test1-2-min</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>test1-3-min</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>test1-5-min</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>test1-6-min</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>test2-1-min</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>test2-2-min</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>test2-3-min</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>test2-4-min</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>test2-5-min</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>test2-6-min</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>test2-7-min</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>test3-1-a-min</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>test3-1-b-min</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>test3-1-c-min</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>test3-2-a-min</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>test3-2-b-min</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>test3-2-c-min</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>test3-2-d-min</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>test3-2-e-min</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>test3-3-a-min</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>test3-3-b-min</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>test3-3-c-min</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>test3-3-d-min</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>test3-3-e-min</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>test3-4-a-min</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>test3-4-b-min</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>test3-4-c-min</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>test3-4-d-min</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>test3-4-e-min</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>test3-5-a-min</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>test3-5-b-min</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>test3-5-c-min</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>test3-5-d-min</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>test3-5-e-min</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>test3-6-a-min</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>test3-6-b-min</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>test3-6-c-min</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>test3-6-d-min</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>test3-6-e-min</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>test3-7-a-min</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>test3-7-b-min</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>test3-7-c-min</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>test3-7-d-min</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>test3-7-e-min</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>test4-1-a-min</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>test4-1-b-min</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test1-1</blockquote><p><b>name</b>: Fixed expansion #1</p><p><b>description</b>: Expanding a fixed limited value set, case #1</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test1-2</blockquote><p><b>name</b>: Fixed expansion #2</p><p><b>description</b>: Expanding a fixed limited value set, case #2</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test1-3</blockquote><p><b>name</b>: Fixed expansion #3</p><p><b>description</b>: Expanding a fixed limited value set, case #3</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test1-4</blockquote><p><b>name</b>: Fixed expansion #4</p><p><b>description</b>: Expanding a fixed limited value set, case #4</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test1-5</blockquote><p><b>name</b>: Fixed expansion #5</p><p><b>description</b>: Expanding a fixed limited value set, case #5</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test1-6</blockquote><p><b>name</b>: Fixed expansion #6</p><p><b>description</b>: Expanding a fixed limited value set, case #6</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test1-7</blockquote><p><b>name</b>: Fixed expansion #7</p><p><b>description</b>: Expanding a fixed limited value set, case #7</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test2-1</blockquote><p><b>name</b>: Fixed expansion #1 + text filter</p><p><b>description</b>: Expanding a fixed limited value set with a text filter 'f', case #1</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test2-2</blockquote><p><b>name</b>: Fixed expansion with text filter #2</p><p><b>description</b>: Expanding a fixed limited value set with a text filter 'mean', case #2</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test2-3</blockquote><p><b>name</b>: Fixed expansion with text filter #3</p><p><b>description</b>: Expanding a fixed limited value set with text filter 'fail', case #3</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test2-4</blockquote><p><b>name</b>: Fixed expansion with a text filter #4</p><p><b>description</b>: Expanding a fixed limited value set with a text filter 'f', case #4</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test2-5</blockquote><p><b>name</b>: Intensional expansion with text filter #1</p><p><b>description</b>: Expanding an intensional value set with text filter 'exp', case #1</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test2-6</blockquote><p><b>name</b>: intensional expansion with text filter #2</p><p><b>description</b>: Expanding an intensional value set with text filter = chronic, case #2</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test2-7</blockquote><p><b>name</b>: intensional expansion with text filter #3</p><p><b>description</b>: Expanding an intensional value set with text filter='renin', case #3</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test3-1-a</blockquote><p><b>name</b>: Validation valueset #1 valid</p><p><b>description</b>: Check that the code {http://example.org/fhir/CodeSystem/patient-contact-relationship}emergency is in the value set</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test3-1-b</blockquote><p><b>name</b>: Validation valueset #1 invalid system</p><p><b>description</b>: Check that the code {http://example.org/fhir/CodeSystem/patient-contact-relationshipX}emergency is not in the value set</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test3-1-c</blockquote><p><b>name</b>: Validation valueset #1 invalid code</p><p><b>description</b>: Check that the code {http://example.org/fhir/CodeSystem/patient-contact-relationship}emergencyX is not in the value set</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test3-2-a</blockquote><p><b>name</b>: Validation valueset #2 valid</p><p><b>description</b>: Check that the code {http://loinc.org}11378-7 'Systolic blood pressure at First encounter' is in the value set</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test3-2-b</blockquote><p><b>name</b>: Validation valueset #2 valid code invalid display</p><p><b>description</b>: Check that the code {http://loinc.org}11378-7 'Systolic blood pressure at First encounter' is in the value set, but supply a wrong display</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test3-2-c</blockquote><p><b>name</b>: Validation valueset #2 invalid system</p><p><b>description</b>: Check that the code {http://loinc.orgX}11378-7 'Systolic blood pressure at First encounter' is not in the value set</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test3-2-d</blockquote><p><b>name</b>: Validation valueset #2 invalid code</p><p><b>description</b>: Check that the code {http://loinc.org}11378-7X 'Systolic blood pressure at First encounter' is not in the value set</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test3-2-e</blockquote><p><b>name</b>: Validation valueset #2 valid code not in valid set</p><p><b>description</b>: Check that the code {http://loinc.org}13457-7 is not in the value set</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test3-3-a</blockquote><p><b>name</b>: Validation valueset #3 valid</p><p><b>description</b>: Check that the code {http://snomed.info/sct}371037005 'Systolic dysfunction' is in the value set</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test3-3-b</blockquote><p><b>name</b>: Validation valueset #3 valid code invalid display</p><p><b>description</b>: Check that the code {http://snomed.info/sct}371037005 'Systolic dysfunction' is in the value set, but give the wrong display`</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test3-3-c</blockquote><p><b>name</b>: Validation valueset #3 invalid system</p><p><b>description</b>: Check that the code {http://snomed.info/sctX}371037005 is not in the value set</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test3-3-d</blockquote><p><b>name</b>: Validation valueset #3 invalid code</p><p><b>description</b>: Check that the code {http://snomed.info/sct}371037005X is not in the value set</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test3-3-e</blockquote><p><b>name</b>: Validation valueset #3 valid code not in valid set</p><p><b>description</b>: Check that the code {http://snomed.info/sct}102261002 is not in the value set</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test3-4-a</blockquote><p><b>name</b>: Validation valueset #4 valid</p><p><b>description</b>: Check that the code {http://terminology.hl7.org/CodeSystem/v3-RoleCode}CHILD 'child' is in the value set</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test3-4-b</blockquote><p><b>name</b>: Validation valueset #4 valid code invalid display</p><p><b>description</b>: Check that the code {http://terminology.hl7.org/CodeSystem/v3-RoleCode}CHILD 'child' is in the value set, but give the wrong display`</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test3-4-c</blockquote><p><b>name</b>: Validation valueset #4 invalid system</p><p><b>description</b>: Check that the code {http://terminology.hl7.org/CodeSystem/v3-RoleCodeX}CHILD is not in the value set</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test3-4-d</blockquote><p><b>name</b>: Validation valueset #4 invalid code</p><p><b>description</b>: Check that the code {http://terminology.hl7.org/CodeSystem/v3-RoleCode}child is not in the value set (note: this coding system is case sensitive, so 'CHILD' is valid, but 'child' is not</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test3-4-e</blockquote><p><b>name</b>: Validation valueset #4 valid code not in valid set</p><p><b>description</b>: Check that the code {http://terminology.hl7.org/CodeSystem/v3-RoleCode}FULLINS is not in the value set</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test3-5-a</blockquote><p><b>name</b>: Validation valueset #5 valid</p><p><b>description</b>: Check that the code {http://loinc.org}11377-9 'Diastolic blood pressure at First encounter' is in the value set</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test3-5-b</blockquote><p><b>name</b>: Validation valueset #5 valid code invalid display</p><p><b>description</b>: Check that the code {http://loinc.org}11377-9 'Diastolic blood pressure at First encounter' is in the value set, but supply a wrong display</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test3-5-c</blockquote><p><b>name</b>: Validation valueset #5 invalid system</p><p><b>description</b>: Check that the code {http://loinc.orgX}11377-9 is not in the value set</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test3-5-d</blockquote><p><b>name</b>: Validation valueset #5 invalid code</p><p><b>description</b>: Check that the code {http://loinc.org}11377-9X is not in the value set</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test3-5-e</blockquote><p><b>name</b>: Validation valueset #5 valid code not in valid set</p><p><b>description</b>: Check that the code {http://loinc.org}13457-7 is not in the value set</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test3-6-a</blockquote><p><b>name</b>: Validation valueset #6 valid</p><p><b>description</b>: Check that the code {http://snomed.info/sct}8762007 'Chronic hypertension in obstetric context (disorder)' is in the value set</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test3-6-b</blockquote><p><b>name</b>: Validation valueset #6 valid code invalid display</p><p><b>description</b>: Check that the code {http://snomed.info/sct}8762007 'Chronic hypertension in obstetric context (disorder)' is in the value set, but give the wrong display`</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test3-6-c</blockquote><p><b>name</b>: Validation valueset #6 invalid system</p><p><b>description</b>: Check that the code {http://snomed.info/sctX}8762007 is not in the value set</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test3-6-d</blockquote><p><b>name</b>: Validation valueset #6 invalid code</p><p><b>description</b>: Check that the code {http://snomed.info/sct}8762007X is not in the value set</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test3-6-e</blockquote><p><b>name</b>: Validation valueset #6 valid code not in valid set</p><p><b>description</b>: Check that the code {http://snomed.info/sct}102261002 is not in the value set</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test3-7-a</blockquote><p><b>name</b>: Validation valueset #7 valid</p><p><b>description</b>: Check that the code {http://snomed.info/sct}8762007 'Chronic hypertension in obstetric context (disorder)' is in the value set</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test3-7-b</blockquote><p><b>name</b>: Validation valueset #7 valid code invalid display</p><p><b>description</b>: Check that the code {http://snomed.info/sct}8762007 'Chronic hypertension in obstetric context (disorder)' is in the value set, but give the wrong display`</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test3-7-c</blockquote><p><b>name</b>: Validation valueset #7 invalid system</p><p><b>description</b>: Check that the code {http://snomed.info/sctX}8762007 is not in the value set</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test3-7-d</blockquote><p><b>name</b>: Validation valueset #7 invalid code</p><p><b>description</b>: Check that the code {http://snomed.info/sct}8762007X is not in the value set</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test3-7-e</blockquote><p><b>name</b>: Validation valueset #7 valid code not in valid set</p><p><b>description</b>: Check that the code {http://snomed.info/sct}102261002 is not in the value set</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test4-1-a</blockquote><p><b>name</b>: Valid - system/code parameters</p><p><b>description</b>: Check that the code {http://example.org/fhir/CodeSystem/patient-contact-relationship}emergency is in the value set</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>test4-1-b</blockquote><p><b>name</b>: Invalid display - system/code parameters</p><p><b>description</b>: Check that the code {http://example.org/fhir/CodeSystem/patient-contact-relationshipX}emergency is in the value set, but give the wrong display</p></blockquote></div>"
+  },
+  "url": "http://hl7.org/fhir/TestScript/2014-02-washington-ts",
+  "identifier": [
+    {
+      "system": "urn:ietf:rfc:3986",
+      "value": "urn:oid:2.16.840.1.113883.4.642.12.7"
+    }
+  ],
+  "version": "1.0",
+  "name": "TerminologyConnectathon1TestScript",
+  "title": "Terminology Connectathon #1 Test Script",
+  "status": "draft",
+  "publisher": "HL7 International / FHIR Infrastructure",
+  "description": "This is the test script the 1st Terminology Services Connectathon",
+  "fixture": [
+    {
+      "id": "extensional-case-1",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "extensional-case-2",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "extensional-case-3",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "extensional-case-4",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "intensional-case-1",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "intensional-case-2",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "intensional-case-3",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "test1-1-min",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "test1-2-min",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "test1-3-min",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "test1-5-min",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "test1-6-min",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "test2-1-min",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "test2-2-min",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "test2-3-min",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "test2-4-min",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "test2-5-min",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "test2-6-min",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "test2-7-min",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "test3-1-a-min",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "test3-1-b-min",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "test3-1-c-min",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "test3-2-a-min",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "test3-2-b-min",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "test3-2-c-min",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "test3-2-d-min",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "test3-2-e-min",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "test3-3-a-min",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "test3-3-b-min",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "test3-3-c-min",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "test3-3-d-min",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "test3-3-e-min",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "test3-4-a-min",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "test3-4-b-min",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "test3-4-c-min",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "test3-4-d-min",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "test3-4-e-min",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "test3-5-a-min",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "test3-5-b-min",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "test3-5-c-min",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "test3-5-d-min",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "test3-5-e-min",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "test3-6-a-min",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "test3-6-b-min",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "test3-6-c-min",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "test3-6-d-min",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "test3-6-e-min",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "test3-7-a-min",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "test3-7-b-min",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "test3-7-c-min",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "test3-7-d-min",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "test3-7-e-min",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "test4-1-a-min",
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "test4-1-b-min",
+      "autocreate": false,
+      "autodelete": false
+    }
+  ],
+  "test": [
+    {
+      "id": "test1-1",
+      "name": "Fixed expansion #1",
+      "description": "Expanding a fixed limited value set, case #1"
+    },
+    {
+      "id": "test1-2",
+      "name": "Fixed expansion #2",
+      "description": "Expanding a fixed limited value set, case #2"
+    },
+    {
+      "id": "test1-3",
+      "name": "Fixed expansion #3",
+      "description": "Expanding a fixed limited value set, case #3"
+    },
+    {
+      "id": "test1-4",
+      "name": "Fixed expansion #4",
+      "description": "Expanding a fixed limited value set, case #4"
+    },
+    {
+      "id": "test1-5",
+      "name": "Fixed expansion #5",
+      "description": "Expanding a fixed limited value set, case #5"
+    },
+    {
+      "id": "test1-6",
+      "name": "Fixed expansion #6",
+      "description": "Expanding a fixed limited value set, case #6"
+    },
+    {
+      "id": "test1-7",
+      "name": "Fixed expansion #7",
+      "description": "Expanding a fixed limited value set, case #7"
+    },
+    {
+      "id": "test2-1",
+      "name": "Fixed expansion #1 + text filter",
+      "description": "Expanding a fixed limited value set with a text filter 'f', case #1"
+    },
+    {
+      "id": "test2-2",
+      "name": "Fixed expansion with text filter #2",
+      "description": "Expanding a fixed limited value set with a text filter 'mean', case #2"
+    },
+    {
+      "id": "test2-3",
+      "name": "Fixed expansion with text filter #3",
+      "description": "Expanding a fixed limited value set with text filter 'fail', case #3"
+    },
+    {
+      "id": "test2-4",
+      "name": "Fixed expansion with a text filter #4",
+      "description": "Expanding a fixed limited value set with a text filter 'f', case #4"
+    },
+    {
+      "id": "test2-5",
+      "name": "Intensional expansion with text filter #1",
+      "description": "Expanding an intensional value set with text filter 'exp', case #1"
+    },
+    {
+      "id": "test2-6",
+      "name": "intensional expansion with text filter #2",
+      "description": "Expanding an intensional value set with text filter = chronic, case #2"
+    },
+    {
+      "id": "test2-7",
+      "name": "intensional expansion with text filter #3",
+      "description": "Expanding an intensional value set with text filter='renin', case #3"
+    },
+    {
+      "id": "test3-1-a",
+      "name": "Validation valueset #1 valid",
+      "description": "Check that the code {http://example.org/fhir/CodeSystem/patient-contact-relationship}emergency is in the value set"
+    },
+    {
+      "id": "test3-1-b",
+      "name": "Validation valueset #1 invalid system",
+      "description": "Check that the code {http://example.org/fhir/CodeSystem/patient-contact-relationshipX}emergency is not in the value set"
+    },
+    {
+      "id": "test3-1-c",
+      "name": "Validation valueset #1 invalid code",
+      "description": "Check that the code {http://example.org/fhir/CodeSystem/patient-contact-relationship}emergencyX is not in the value set"
+    },
+    {
+      "id": "test3-2-a",
+      "name": "Validation valueset #2 valid",
+      "description": "Check that the code {http://loinc.org}11378-7 'Systolic blood pressure at First encounter' is in the value set"
+    },
+    {
+      "id": "test3-2-b",
+      "name": "Validation valueset #2 valid code invalid display",
+      "description": "Check that the code {http://loinc.org}11378-7 'Systolic blood pressure at First encounter' is in the value set, but supply a wrong display"
+    },
+    {
+      "id": "test3-2-c",
+      "name": "Validation valueset #2 invalid system",
+      "description": "Check that the code {http://loinc.orgX}11378-7 'Systolic blood pressure at First encounter' is not in the value set"
+    },
+    {
+      "id": "test3-2-d",
+      "name": "Validation valueset #2 invalid code",
+      "description": "Check that the code {http://loinc.org}11378-7X 'Systolic blood pressure at First encounter' is not in the value set"
+    },
+    {
+      "id": "test3-2-e",
+      "name": "Validation valueset #2 valid code not in valid set",
+      "description": "Check that the code {http://loinc.org}13457-7 is not in the value set"
+    },
+    {
+      "id": "test3-3-a",
+      "name": "Validation valueset #3 valid",
+      "description": "Check that the code {http://snomed.info/sct}371037005 'Systolic dysfunction' is in the value set"
+    },
+    {
+      "id": "test3-3-b",
+      "name": "Validation valueset #3 valid code invalid display",
+      "description": "Check that the code {http://snomed.info/sct}371037005 'Systolic dysfunction' is in the value set, but give the wrong display`"
+    },
+    {
+      "id": "test3-3-c",
+      "name": "Validation valueset #3 invalid system",
+      "description": "Check that the code {http://snomed.info/sctX}371037005 is not in the value set"
+    },
+    {
+      "id": "test3-3-d",
+      "name": "Validation valueset #3 invalid code",
+      "description": "Check that the code {http://snomed.info/sct}371037005X is not in the value set"
+    },
+    {
+      "id": "test3-3-e",
+      "name": "Validation valueset #3 valid code not in valid set",
+      "description": "Check that the code {http://snomed.info/sct}102261002 is not in the value set"
+    },
+    {
+      "id": "test3-4-a",
+      "name": "Validation valueset #4 valid",
+      "description": "Check that the code {http://terminology.hl7.org/CodeSystem/v3-RoleCode}CHILD 'child' is in the value set"
+    },
+    {
+      "id": "test3-4-b",
+      "name": "Validation valueset #4 valid code invalid display",
+      "description": "Check that the code {http://terminology.hl7.org/CodeSystem/v3-RoleCode}CHILD 'child' is in the value set, but give the wrong display`"
+    },
+    {
+      "id": "test3-4-c",
+      "name": "Validation valueset #4 invalid system",
+      "description": "Check that the code {http://terminology.hl7.org/CodeSystem/v3-RoleCodeX}CHILD is not in the value set"
+    },
+    {
+      "id": "test3-4-d",
+      "name": "Validation valueset #4 invalid code",
+      "description": "Check that the code {http://terminology.hl7.org/CodeSystem/v3-RoleCode}child is not in the value set (note: this coding system is case sensitive, so 'CHILD' is valid, but 'child' is not"
+    },
+    {
+      "id": "test3-4-e",
+      "name": "Validation valueset #4 valid code not in valid set",
+      "description": "Check that the code {http://terminology.hl7.org/CodeSystem/v3-RoleCode}FULLINS is not in the value set"
+    },
+    {
+      "id": "test3-5-a",
+      "name": "Validation valueset #5 valid",
+      "description": "Check that the code {http://loinc.org}11377-9 'Diastolic blood pressure at First encounter' is in the value set"
+    },
+    {
+      "id": "test3-5-b",
+      "name": "Validation valueset #5 valid code invalid display",
+      "description": "Check that the code {http://loinc.org}11377-9 'Diastolic blood pressure at First encounter' is in the value set, but supply a wrong display"
+    },
+    {
+      "id": "test3-5-c",
+      "name": "Validation valueset #5 invalid system",
+      "description": "Check that the code {http://loinc.orgX}11377-9 is not in the value set"
+    },
+    {
+      "id": "test3-5-d",
+      "name": "Validation valueset #5 invalid code",
+      "description": "Check that the code {http://loinc.org}11377-9X is not in the value set"
+    },
+    {
+      "id": "test3-5-e",
+      "name": "Validation valueset #5 valid code not in valid set",
+      "description": "Check that the code {http://loinc.org}13457-7 is not in the value set"
+    },
+    {
+      "id": "test3-6-a",
+      "name": "Validation valueset #6 valid",
+      "description": "Check that the code {http://snomed.info/sct}8762007 'Chronic hypertension in obstetric context (disorder)' is in the value set"
+    },
+    {
+      "id": "test3-6-b",
+      "name": "Validation valueset #6 valid code invalid display",
+      "description": "Check that the code {http://snomed.info/sct}8762007 'Chronic hypertension in obstetric context (disorder)' is in the value set, but give the wrong display`"
+    },
+    {
+      "id": "test3-6-c",
+      "name": "Validation valueset #6 invalid system",
+      "description": "Check that the code {http://snomed.info/sctX}8762007 is not in the value set"
+    },
+    {
+      "id": "test3-6-d",
+      "name": "Validation valueset #6 invalid code",
+      "description": "Check that the code {http://snomed.info/sct}8762007X is not in the value set"
+    },
+    {
+      "id": "test3-6-e",
+      "name": "Validation valueset #6 valid code not in valid set",
+      "description": "Check that the code {http://snomed.info/sct}102261002 is not in the value set"
+    },
+    {
+      "id": "test3-7-a",
+      "name": "Validation valueset #7 valid",
+      "description": "Check that the code {http://snomed.info/sct}8762007 'Chronic hypertension in obstetric context (disorder)' is in the value set"
+    },
+    {
+      "id": "test3-7-b",
+      "name": "Validation valueset #7 valid code invalid display",
+      "description": "Check that the code {http://snomed.info/sct}8762007 'Chronic hypertension in obstetric context (disorder)' is in the value set, but give the wrong display`"
+    },
+    {
+      "id": "test3-7-c",
+      "name": "Validation valueset #7 invalid system",
+      "description": "Check that the code {http://snomed.info/sctX}8762007 is not in the value set"
+    },
+    {
+      "id": "test3-7-d",
+      "name": "Validation valueset #7 invalid code",
+      "description": "Check that the code {http://snomed.info/sct}8762007X is not in the value set"
+    },
+    {
+      "id": "test3-7-e",
+      "name": "Validation valueset #7 valid code not in valid set",
+      "description": "Check that the code {http://snomed.info/sct}102261002 is not in the value set"
+    },
+    {
+      "id": "test4-1-a",
+      "name": "Valid - system/code parameters",
+      "description": "Check that the code {http://example.org/fhir/CodeSystem/patient-contact-relationship}emergency is in the value set"
+    },
+    {
+      "id": "test4-1-b",
+      "name": "Invalid display - system/code parameters",
+      "description": "Check that the code {http://example.org/fhir/CodeSystem/patient-contact-relationshipX}emergency is in the value set, but give the wrong display"
+    }
+  ]
+}

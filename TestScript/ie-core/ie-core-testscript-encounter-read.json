@@ -1,0 +1,110 @@
+{
+  "resourceType": "TestScript",
+  "id": "ie-core-testscript-encounter-read",
+  "url": "https://hl7-ie.github.io/ie-core/fhir/ie/core/TestScript/ie-core-testscript-encounter-read",
+  "version": "0.2.0",
+  "name": "IECoreTestScriptEncounterRead",
+  "title": "IE Core TestScript: Encounter Read",
+  "status": "draft",
+  "date": "2025-01-01",
+  "publisher": "IE Core (Proof of Concept by Nithin Mohan T K)",
+  "description": "Verifies that a FHIR server can return an Encounter resource conforming to the IE Core Encounter profile.",
+  "test": [
+    {
+      "name": "Encounter Read Test",
+      "description": "Read an Encounter and verify it conforms to the IE Core Encounter profile.",
+      "action": [
+        {
+          "operation": {
+            "type": {
+              "system": "http://terminology.hl7.org/CodeSystem/testscript-operation-codes",
+              "code": "read"
+            },
+            "resource": "Encounter",
+            "description": "Read the Encounter resource",
+            "accept": "json",
+            "encodeRequestUrl": true,
+            "params": "/ie-core-encounter-example"
+          }
+        },
+        {
+          "assert": {
+            "description": "Confirm the response is HTTP 200 OK",
+            "response": "okay",
+            "warningOnly": false
+          }
+        },
+        {
+          "assert": {
+            "description": "Confirm the returned resource is an Encounter",
+            "resource": "Encounter",
+            "warningOnly": false
+          }
+        },
+        {
+          "assert": {
+            "description": "Confirm Encounter has a status",
+            "expression": "status.exists()",
+            "warningOnly": false
+          }
+        },
+        {
+          "assert": {
+            "description": "Confirm Encounter has a class",
+            "expression": "class.exists()",
+            "warningOnly": false
+          }
+        },
+        {
+          "assert": {
+            "description": "Confirm Encounter has a subject reference",
+            "expression": "subject.exists()",
+            "warningOnly": false
+          }
+        }
+      ]
+    }
+  ],
+  "fixture": [
+    {
+      "id": "server-Practitioner-ie-core-practitioner-example",
+      "autocreate": true,
+      "autodelete": true,
+      "resource": {
+        "reference": "/server/Practitioner-ie-core-practitioner-example.json"
+      }
+    },
+    {
+      "id": "server-Organization-ie-core-organization-example",
+      "autocreate": true,
+      "autodelete": true,
+      "resource": {
+        "reference": "/server/Organization-ie-core-organization-example.json"
+      }
+    },
+    {
+      "id": "server-Patient-ie-core-patient-example",
+      "autocreate": true,
+      "autodelete": true,
+      "resource": {
+        "reference": "/server/Patient-ie-core-patient-example.json"
+      }
+    },
+    {
+      "id": "server-Location-ie-core-location-example",
+      "autocreate": true,
+      "autodelete": true,
+      "resource": {
+        "reference": "/server/Location-ie-core-location-example.json"
+      }
+    },
+    {
+      "id": "server-Encounter-ie-core-encounter-example",
+      "resource": {
+        "reference": "/server/Encounter-ie-core-encounter-example.json"
+      },
+      "autocreate": true,
+      "autodelete": true
+    }
+  ]
+}

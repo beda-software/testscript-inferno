@@ -1,0 +1,264 @@
+{
+  "resourceType": "TestScript",
+  "id": "RDS-sharing-verification",
+  "text": {
+    "status": "extensions",
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: TestScript RDS-sharing-verification</b></p><a name=\"RDS-sharing-verification\"> </a><a name=\"hcRDS-sharing-verification\"> </a><p><b>StructureDefinition Work Group</b>: ii</p><p><b>url</b>: <a href=\"TestScript-RDS-sharing-verification.html\">TestScript TestScript_RDS_Sharing_Verification</a></p><p><b>version</b>: 1.0.0</p><p><b>name</b>: TestScript_RDS_Sharing_Verification</p><p><b>status</b>: Active</p><p><b>date</b>: 2021-07-17</p><p><b>publisher</b>: HL7 International / Imaging Integration</p><p><b>contact</b>: <a href=\"http://www.hl7.org/Special/committees/imagemgt\">http://www.hl7.org/Special/committees/imagemgt</a>, HL7 Imaging Integration Workgroup: <a href=\"http://www.hl7.org/Special/committees/imagemgt\">http://www.hl7.org/Special/committees/imagemgt</a>, Abderrazek Boufahja: <a href=\"mailto:abderrazek.boufahja@gehealthcare.com\">abderrazek.boufahja@gehealthcare.com</a></p><p><b>description</b>: </p><div><p>TestScript to validate the sharing data between RDSP actor and a FHIR Server.</p>\n</div><p><b>jurisdiction</b>: <span title=\"Codes:{http://unstats.un.org/unsd/methods/m49/m49.htm 001}\">Global (Whole world)</span></p><p><b>copyright</b>: </p><div><p>HL7 2021</p>\n</div><h3>Destinations</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Index</b></td><td><b>Profile</b></td></tr><tr><td style=\"display: none\">*</td><td>1</td><td><a href=\"http://terminology.hl7.org/7.1.0/CodeSystem-testscript-profile-destination-types.html#testscript-profile-destination-types-FHIR-Server\">Test script profile destination type: FHIR-Server</a> (FHIR Server)</td></tr></table><blockquote><p><b>variable</b></p><p><b>name</b>: patientIdentifier</p><p><b>defaultValue</b>: PAT3421</p><p><b>description</b>: Enter the patient identifier as used in the RDSR: tag(0010,0020) Patient ID</p></blockquote><blockquote><p><b>variable</b></p><p><b>name</b>: deviceIdentifier</p><p><b>defaultValue</b>: 767ER</p><p><b>description</b>: Enter the Device identifier as used in the RDSR: tag(0018,1000) Device Serial Number</p></blockquote><blockquote><p><b>variable</b></p><p><b>name</b>: practitionerFamily</p><p><b>defaultValue</b>: Moore</p><p><b>description</b>: Enter the Practitioner family name as used in the RDSR: TID 1020(Person Participant).EV (113871, DCM, Person ID)</p></blockquote><blockquote><p><b>variable</b></p><p><b>name</b>: practitionerGiven</p><p><b>defaultValue</b>: John</p><p><b>description</b>: Enter the Practitioner given name as used in the RDSR: TID 1020(Person Participant).EV (113871, DCM, Person ID)</p></blockquote><blockquote><p><b>variable</b></p><p><b>name</b>: studyInstanceUID</p><p><b>defaultValue</b>: 1.2.840.121.3.32.0.1.25</p><p><b>description</b>: Enter the Study Instance UID identifying the image study: tag(0020,000D) Study Instance UID</p></blockquote><blockquote><p><b>variable</b></p><p><b>name</b>: patientResourceId</p><p><b>path</b>: Bundle/entry/resource/Patient/id</p><p><b>sourceId</b>: patient-search-response</p></blockquote><blockquote><p><b>variable</b></p><p><b>name</b>: deviceResourceId</p><p><b>path</b>: Bundle/entry/resource/Device/id</p><p><b>sourceId</b>: device-search-response</p></blockquote><blockquote><p><b>variable</b></p><p><b>name</b>: practitionerResourceId</p><p><b>path</b>: Bundle/entry/resource/Practitioner/id</p><p><b>sourceId</b>: practitioner-search-response</p></blockquote><blockquote><p><b>variable</b></p><p><b>name</b>: imagingStudyResourceId</p><p><b>path</b>: Bundle/entry/resource/ImagingStudy/id</p><p><b>sourceId</b>: imagingstudy-search-response</p></blockquote><blockquote><p><b>test</b></p><p><b>name</b>: RDS_Sharing_Verification</p><p><b>description</b>: This is a test to validate the sharing of data between RDSP actor and a FHIR Server. The RDSP actor gathers an RDSR from an irradiating modality (a CT RDSR, an X-Ray RDSR or an RRDSR). Once Data collected, the RDSP will collect the right IDs for the patient, practitioner, ImagingStudy and Device from the FHIR Server, then it will generate the radiation summary resources and share them with the FHIR Server. You can refer to the complete description under : http://hl7.org/fhir/uv/radiation-dose-summary/testing.html#scenario-1-rdsr-summary-to-fhir. This test is executed after this workflow is performed, and the scripts will check the data are well received by the FHIR Server.</p><blockquote><p><b>action</b></p><h3>Operations</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Type</b></td><td><b>Resource</b></td><td><b>Description</b></td><td><b>Accept</b></td><td><b>EncodeRequestUrl</b></td><td><b>Params</b></td><td><b>ResponseId</b></td></tr><tr><td style=\"display: none\">*</td><td><a href=\"http://terminology.hl7.org/7.1.0/CodeSystem-testscript-operation-codes.html#testscript-operation-codes-search\">Test script operation code: search</a> (Search)</td><td>Patient</td><td>Search for matching Patient related to the identifier ${patientIdentifier}</td><td>json</td><td>true</td><td>?identifier=${patientIdentifier}</td><td>patient-search-response</td></tr></table></blockquote><blockquote><p><b>action</b></p><h3>Asserts</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Description</b></td><td><b>Expression</b></td><td><b>WarningOnly</b></td></tr><tr><td style=\"display: none\">*</td><td>Confirm that the total number of response is greater than 1.</td><td>Bundle.total.toInteger() &gt;= 1</td><td>false</td></tr></table></blockquote></blockquote><blockquote><p><b>test</b></p><p><b>name</b>: search_device</p><p><b>description</b>: Search by device identifier</p><blockquote><p><b>action</b></p><h3>Operations</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Type</b></td><td><b>Resource</b></td><td><b>Description</b></td><td><b>Accept</b></td><td><b>EncodeRequestUrl</b></td><td><b>Params</b></td><td><b>ResponseId</b></td></tr><tr><td style=\"display: none\">*</td><td><a href=\"http://terminology.hl7.org/7.1.0/CodeSystem-testscript-operation-codes.html#testscript-operation-codes-search\">Test script operation code: search</a> (Search)</td><td>Device</td><td>Search for matching Device related to the identifier ${deviceIdentifier}</td><td>json</td><td>true</td><td>?identifier=${deviceIdentifier}</td><td>device-search-response</td></tr></table></blockquote><blockquote><p><b>action</b></p><h3>Asserts</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Description</b></td><td><b>Expression</b></td><td><b>WarningOnly</b></td></tr><tr><td style=\"display: none\">*</td><td>Confirm that the total number of response is greater than 1.</td><td>Bundle.total.toInteger() &gt;= 1</td><td>false</td></tr></table></blockquote></blockquote><blockquote><p><b>test</b></p><p><b>name</b>: search_practitioner</p><p><b>description</b>: Search by practitioner name</p><blockquote><p><b>action</b></p><h3>Operations</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Type</b></td><td><b>Resource</b></td><td><b>Description</b></td><td><b>Accept</b></td><td><b>EncodeRequestUrl</b></td><td><b>Params</b></td><td><b>ResponseId</b></td></tr><tr><td style=\"display: none\">*</td><td><a href=\"http://terminology.hl7.org/7.1.0/CodeSystem-testscript-operation-codes.html#testscript-operation-codes-search\">Test script operation code: search</a> (Search)</td><td>Practitioner</td><td>Search for matching Practitioner related to the family name ${practitionerFamily} and the given name ${practitionerGiven}</td><td>json</td><td>true</td><td>?family=${practitionerFamily}&amp;given=${practitionerGiven}</td><td>practitioner-search-response</td></tr></table></blockquote><blockquote><p><b>action</b></p><h3>Asserts</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Description</b></td><td><b>Expression</b></td><td><b>WarningOnly</b></td></tr><tr><td style=\"display: none\">*</td><td>Confirm that the total number of response is greater than 1.</td><td>Bundle.total.toInteger() &gt;= 1</td><td>false</td></tr></table></blockquote></blockquote><blockquote><p><b>test</b></p><p><b>name</b>: search_ImagingStudy</p><p><b>description</b>: Search by ImagingStudy identifier</p><blockquote><p><b>action</b></p><h3>Operations</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Type</b></td><td><b>Resource</b></td><td><b>Description</b></td><td><b>Accept</b></td><td><b>EncodeRequestUrl</b></td><td><b>Params</b></td><td><b>ResponseId</b></td></tr><tr><td style=\"display: none\">*</td><td><a href=\"http://terminology.hl7.org/7.1.0/CodeSystem-testscript-operation-codes.html#testscript-operation-codes-search\">Test script operation code: search</a> (Search)</td><td>ImagingStudy</td><td>Search for matching ImagingStudy related to the studyInstanceUID ${studyInstanceUID}</td><td>json</td><td>true</td><td>?identifier=urn:oid:${studyInstanceUID}</td><td>imagingstudy-search-response</td></tr></table></blockquote><blockquote><p><b>action</b></p><h3>Asserts</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Description</b></td><td><b>Expression</b></td><td><b>WarningOnly</b></td></tr><tr><td style=\"display: none\">*</td><td>Confirm that the total number of response is greater than 1.</td><td>Bundle.total.toInteger() &gt;= 1</td><td>false</td></tr></table></blockquote></blockquote><blockquote><p><b>test</b></p><p><b>name</b>: search_rds</p><p><b>description</b>: Search Radiation Dose Summary resource by patient, device and part-of parameters</p><blockquote><p><b>action</b></p><h3>Operations</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Type</b></td><td><b>Resource</b></td><td><b>Description</b></td><td><b>Accept</b></td><td><b>EncodeRequestUrl</b></td><td><b>Params</b></td><td><b>ResponseId</b></td></tr><tr><td style=\"display: none\">*</td><td><a href=\"http://terminology.hl7.org/7.1.0/CodeSystem-testscript-operation-codes.html#testscript-operation-codes-search\">Test script operation code: search</a> (Search)</td><td>Observation</td><td>Search for matching Radiation Dose Summary related to the described parameters</td><td>json</td><td>true</td><td>?code=73569-6&amp;device=${deviceResourceId}&amp;patient=${patientResourceId}&amp;part-of=${imagingStudyResourceId}</td><td>rds-search-response</td></tr></table></blockquote><blockquote><p><b>action</b></p><h3>Asserts</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Description</b></td><td><b>Expression</b></td><td><b>WarningOnly</b></td></tr><tr><td style=\"display: none\">*</td><td>Confirm that the total number of response is greater than 1.</td><td>Bundle.total.toInteger() &gt;= 1</td><td>false</td></tr></table></blockquote></blockquote></div>"
+  },
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-wg",
+      "valueCode": "ii"
+    }
+  ],
+  "url": "http://hl7.org/fhir/uv/radiation-dose-summary/TestScript/RDS-sharing-verification",
+  "version": "1.0.0",
+  "name": "TestScript_RDS_Sharing_Verification",
+  "status": "active",
+  "date": "2021-07-17",
+  "publisher": "HL7 International / Imaging Integration",
+  "contact": [
+    {
+      "telecom": [
+        {
+          "system": "url",
+          "value": "http://www.hl7.org/Special/committees/imagemgt"
+        }
+      ]
+    },
+    {
+      "name": "HL7 Imaging Integration Workgroup",
+      "telecom": [
+        {
+          "system": "url",
+          "value": "http://www.hl7.org/Special/committees/imagemgt"
+        }
+      ]
+    },
+    {
+      "name": "Abderrazek Boufahja",
+      "telecom": [
+        {
+          "system": "email",
+          "value": "abderrazek.boufahja@gehealthcare.com"
+        }
+      ]
+    }
+  ],
+  "description": "TestScript to validate the sharing data between RDSP actor and a FHIR Server.",
+  "jurisdiction": [
+    {
+      "coding": [
+        {
+          "system": "http://unstats.un.org/unsd/methods/m49/m49.htm",
+          "code": "001"
+        }
+      ]
+    }
+  ],
+  "copyright": "HL7 2021",
+  "destination": [
+    {
+      "index": 1,
+      "profile": {
+        "system": "http://terminology.hl7.org/CodeSystem/testscript-profile-destination-types",
+        "code": "FHIR-Server",
+        "display": "FHIR Server"
+      }
+    }
+  ],
+  "variable": [
+    {
+      "name": "patientIdentifier",
+      "defaultValue": "PAT3421",
+      "description": "Enter the patient identifier as used in the RDSR: tag(0010,0020) Patient ID"
+    },
+    {
+      "name": "deviceIdentifier",
+      "defaultValue": "767ER",
+      "description": "Enter the Device identifier as used in the RDSR: tag(0018,1000) Device Serial Number"
+    },
+    {
+      "name": "practitionerFamily",
+      "defaultValue": "Moore",
+      "description": "Enter the Practitioner family name as used in the RDSR: TID 1020(Person Participant).EV (113871, DCM, Person ID)"
+    },
+    {
+      "name": "practitionerGiven",
+      "defaultValue": "John",
+      "description": "Enter the Practitioner given name as used in the RDSR: TID 1020(Person Participant).EV (113871, DCM, Person ID)"
+    },
+    {
+      "name": "studyInstanceUID",
+      "defaultValue": "1.2.840.121.3.32.0.1.25",
+      "description": "Enter the Study Instance UID identifying the image study: tag(0020,000D) Study Instance UID"
+    },
+    {
+      "name": "patientResourceId",
+      "path": "Bundle/entry/resource/Patient/id",
+      "sourceId": "patient-search-response"
+    },
+    {
+      "name": "deviceResourceId",
+      "path": "Bundle/entry/resource/Device/id",
+      "sourceId": "device-search-response"
+    },
+    {
+      "name": "practitionerResourceId",
+      "path": "Bundle/entry/resource/Practitioner/id",
+      "sourceId": "practitioner-search-response"
+    },
+    {
+      "name": "imagingStudyResourceId",
+      "path": "Bundle/entry/resource/ImagingStudy/id",
+      "sourceId": "imagingstudy-search-response"
+    }
+  ],
+  "test": [
+    {
+      "name": "RDS_Sharing_Verification",
+      "description": "This is a test to validate the sharing of data between RDSP actor and a FHIR Server. The RDSP actor gathers an RDSR from an irradiating modality (a CT RDSR, an X-Ray RDSR or an RRDSR). Once Data collected, the RDSP will collect the right IDs for the patient, practitioner, ImagingStudy and Device from the FHIR Server, then it will generate the radiation summary resources and share them with the FHIR Server. You can refer to the complete description under : http://hl7.org/fhir/uv/radiation-dose-summary/testing.html#scenario-1-rdsr-summary-to-fhir. This test is executed after this workflow is performed, and the scripts will check the data are well received by the FHIR Server.",
+      "action": [
+        {
+          "operation": {
+            "type": {
+              "system": "http://terminology.hl7.org/CodeSystem/testscript-operation-codes",
+              "code": "search"
+            },
+            "resource": "Patient",
+            "description": "Search for matching Patient related to the identifier ${patientIdentifier}",
+            "accept": "json",
+            "encodeRequestUrl": true,
+            "params": "?identifier=${patientIdentifier}",
+            "responseId": "patient-search-response"
+          }
+        },
+        {
+          "assert": {
+            "description": "Confirm that the total number of response is greater than 1.",
+            "expression": "Bundle.total.toInteger() >= 1",
+            "warningOnly": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "search_device",
+      "description": "Search by device identifier",
+      "action": [
+        {
+          "operation": {
+            "type": {
+              "system": "http://terminology.hl7.org/CodeSystem/testscript-operation-codes",
+              "code": "search"
+            },
+            "resource": "Device",
+            "description": "Search for matching Device related to the identifier ${deviceIdentifier}",
+            "accept": "json",
+            "encodeRequestUrl": true,
+            "params": "?identifier=${deviceIdentifier}",
+            "responseId": "device-search-response"
+          }
+        },
+        {
+          "assert": {
+            "description": "Confirm that the total number of response is greater than 1.",
+            "expression": "Bundle.total.toInteger() >= 1",
+            "warningOnly": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "search_practitioner",
+      "description": "Search by practitioner name",
+      "action": [
+        {
+          "operation": {
+            "type": {
+              "system": "http://terminology.hl7.org/CodeSystem/testscript-operation-codes",
+              "code": "search"
+            },
+            "resource": "Practitioner",
+            "description": "Search for matching Practitioner related to the family name ${practitionerFamily} and the given name ${practitionerGiven}",
+            "accept": "json",
+            "encodeRequestUrl": true,
+            "params": "?family=${practitionerFamily}&given=${practitionerGiven}",
+            "responseId": "practitioner-search-response"
+          }
+        },
+        {
+          "assert": {
+            "description": "Confirm that the total number of response is greater than 1.",
+            "expression": "Bundle.total.toInteger() >= 1",
+            "warningOnly": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "search_ImagingStudy",
+      "description": "Search by ImagingStudy identifier",
+      "action": [
+        {
+          "operation": {
+            "type": {
+              "system": "http://terminology.hl7.org/CodeSystem/testscript-operation-codes",
+              "code": "search"
+            },
+            "resource": "ImagingStudy",
+            "description": "Search for matching ImagingStudy related to the studyInstanceUID ${studyInstanceUID}",
+            "accept": "json",
+            "encodeRequestUrl": true,
+            "params": "?identifier=urn:oid:${studyInstanceUID}",
+            "responseId": "imagingstudy-search-response"
+          }
+        },
+        {
+          "assert": {
+            "description": "Confirm that the total number of response is greater than 1.",
+            "expression": "Bundle.total.toInteger() >= 1",
+            "warningOnly": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "search_rds",
+      "description": "Search Radiation Dose Summary resource by patient, device and part-of parameters",
+      "action": [
+        {
+          "operation": {
+            "type": {
+              "system": "http://terminology.hl7.org/CodeSystem/testscript-operation-codes",
+              "code": "search"
+            },
+            "resource": "Observation",
+            "description": "Search for matching Radiation Dose Summary related to the described parameters",
+            "accept": "json",
+            "encodeRequestUrl": true,
+            "params": "?code=73569-6&device=${deviceResourceId}&patient=${patientResourceId}&part-of=${imagingStudyResourceId}",
+            "responseId": "rds-search-response"
+          }
+        },
+        {
+          "assert": {
+            "description": "Confirm that the total number of response is greater than 1.",
+            "expression": "Bundle.total.toInteger() >= 1",
+            "warningOnly": false
+          }
+        }
+      ]
+    }
+  ],
+  "fixture": [
+    {
+      "id": "server-Bundle-Bundle-RDS-resources",
+      "resource": {
+        "reference": "/server/Bundle-Bundle-RDS-resources.json"
+      },
+      "autocreate": true,
+      "autodelete": true
+    }
+  ]
+}

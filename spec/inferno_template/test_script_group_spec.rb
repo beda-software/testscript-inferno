@@ -1,5 +1,6 @@
 RSpec.describe InfernoTemplate::TestScriptGroup do
-  let(:suite_id) { 'inferno_template' }
+  let(:suite_id) { 'au_core' }
+  let(:ig_dir) { File.join(InfernoTemplate::TESTSCRIPT_DIR, 'au-core') }
   let(:suite) { Inferno::Repositories::TestSuites.new.find(suite_id) }
   let(:session_data_repo) { Inferno::Repositories::SessionData.new }
   let(:results_repo) { Inferno::Repositories::Results.new }
@@ -22,7 +23,7 @@ RSpec.describe InfernoTemplate::TestScriptGroup do
   end
 
   def resource(name)
-    JSON.parse(File.read(File.join(InfernoTemplate::RESOURCES_DIR, "#{name}.json")))
+    JSON.parse(File.read(File.join(ig_dir, "#{name}.json")))
   end
 
   def results(group)
@@ -34,21 +35,65 @@ RSpec.describe InfernoTemplate::TestScriptGroup do
     { outcomes: [{ issues: }], sessionId: test_session.id }.to_json
   end
 
-  describe '.testscript_groups' do
-    let(:scripts) do
-      Dir[File.join(InfernoTemplate::RESOURCES_DIR, '*.json')]
-        .map { |path| JSON.parse(File.read(path)) }
-        .select { |definition| definition['resourceType'] == 'TestScript' }
+  describe 'suites' do
+    let(:suites) { InfernoTemplate::TestScriptSuite.subclasses }
+
+    it 'has a suite per TestScript/<IG> directory, all listed in the test kit' do
+      expect(suites.map(&:testscript_dir))
+        .to match_array(Dir[File.join(InfernoTemplate::TESTSCRIPT_DIR, '*')].select { |path| File.directory?(path) })
+      expect(InfernoTemplate::Metadata.suite_ids).to match_array(suites.map(&:id))
+      expect(Inferno::Repositories::TestSuites.new.find(InfernoTemplate::TestScriptSuite.id)).to be_nil
     end
 
-    it 'defines a group per TestScript, with Setup, a test per TestScript test and Teardown' do
-      expect(suite.groups.map(&:title)).to match_array(scripts.map { |script| script['title'] })
+    it 'shares the inputs and FHIR client, and sets up the validator per suite' do
+      expect(suite).to eq(InfernoTemplate::AuCoreSuite)
+      expect(suite.inputs).to eq(%i[url authorization xml_support])
+      expect(suite.fhir_client_definitions.keys).to eq([:default])
+      expect(suite.fhir_validators[:default].map(&:igs)).to eq([['hl7.fhir.au.core#2.0.0']])
+      expect(suite.fhir_validators[:default].first.validation_context.definition)
+        .to include(txServer: 'https://tx.hl7.org.au/fhir')
+      expect(InfernoTemplate::IeCoreSuite.fhir_validators[:default].first.validation_context.definition)
+        .to_not have_key(:txServer)
+      expect(suite.short_title).to eq('AU Core TestScript')
+    end
 
-      scripts.each do |script|
-        group = suite.groups.find { |g| g.id == "#{suite_id}-#{script['id'].tr('-', '_')}" }
-        expect(group).to be_run_as_group
-        expect(group.tests.map(&:title)).to eq(['Setup', *script['test'].map { |test| test['name'] }, 'Teardown'])
+    it 'has a local Aidbox preset, on the host and in Docker, for every suite' do
+      presets = Dir[File.expand_path('../../config/presets/*.json', __dir__)].map { |path| JSON.parse(File.read(path)) }
+
+      suites.each do |ig_suite|
+        expect(presets.select { |preset| preset['test_suite_id'] == ig_suite.id }.map { |preset| preset['id'] })
+          .to contain_exactly("#{ig_suite.id}_local_aidbox", "#{ig_suite.id}_local_aidbox_docker")
       end
+    end
+
+    InfernoTemplate::TestScriptSuite.subclasses.each do |ig_suite|
+      it "defines a group per TestScript in #{ig_suite.id}, with Setup, its tests and Teardown" do
+        scripts = Dir[File.join(ig_suite.testscript_dir, '*.json')]
+          .map { |path| JSON.parse(File.read(path)) }
+          .select { |definition| definition['resourceType'] == 'TestScript' }
+
+        expect(ig_suite.groups.map(&:title)).to match_array(scripts.map { |script| script['title'] || script['name'] })
+
+        scripts.each do |script|
+          group = ig_suite.groups.find { |g| g.id == "#{ig_suite.id}-#{script['id'].tr('-', '_')}" }
+          expect(group).to be_run_as_group
+          tests = script.fetch('test', []).map.with_index(1) { |test, index| test['name'] || "Test #{index}" }
+          expect(group.tests.map(&:title)).to eq(['Setup', *tests, 'Teardown'])
+        end
+      end
+    end
+  end
+
+  describe 'fixtures referenced by a path from the IG directory' do
+    let(:suite_id) { 'erezept_validator' }
+    let(:group) { suite.groups.find { |g| g.id.end_with?('-validate_e_rezept_ok') } }
+
+    it 'loads them in Setup' do
+      run(group.tests.first, url:)
+
+      script = JSON.parse(File.read(File.join(suite.testscript_dir, 'validate-e-rezept-ok.json')))
+      expect(script['fixture'].map { |fixture| fixture.dig('resource', 'reference') }).to all(start_with('/examples/'))
+      expect(results(group)['Setup'].then { |result| [result.result, result.result_message] }).to eq(['pass', nil])
     end
   end
 
@@ -108,15 +153,21 @@ RSpec.describe InfernoTemplate::TestScriptGroup do
       expect(result.result).to eq('fail')
       expect(result.result_message).to include('au-core-patient')
       expect(result.messages.map(&:message)).to include(/bad gender/)
+      expect(
+        a_request(:post, validation_url).with do |request|
+          JSON.parse(request.body).values_at('cliContext', 'validationContext').compact.first['txServer'] ==
+            'https://tx.hl7.org.au/fhir'
+        end
+      ).to have_been_made.at_least_once
     end
 
-    it 'skips the tests when Setup fails' do
+    it 'fails Setup when the server rejects a fixture, and skips the tests' do
       stub_request(:put, patient_url).to_return(status: 500, body: 'boom')
 
       run(group, url:, authorization:)
 
       expect(results(group).transform_values(&:result))
-        .to include('Setup' => 'error', 'Read' => 'skip', 'Teardown' => 'pass')
+        .to include('Setup' => 'fail', 'Read' => 'skip', 'Teardown' => 'pass')
     end
   end
 end

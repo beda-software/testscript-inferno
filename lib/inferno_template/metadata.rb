@@ -69,7 +69,7 @@ module InfernoTemplate
       Please report any issues with this set of tests in the [issues section](https://example.com/example-test-kit-repo/issues) of the repository.
     DESCRIPTION
 
-    suite_ids [:inferno_template]
+    suite_ids(TestScriptSuite.subclasses.map(&:id).sort)
     tags [] # E.g., ['SMART App Launch', 'US Core']
     last_updated LAST_UPDATED
     version VERSION

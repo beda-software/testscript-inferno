@@ -26,8 +26,16 @@ module InfernoTemplate
         # The tests share an evaluator and the fixtures it created on the server
         run_as_group
 
+        # Variables the tester provides (only a hint, no value or expression) are inputs
+        variables = TestScriptGroup.input_variables(definition)
+        variables.each do |input_name, variable|
+          input input_name, title: variable['name'], optional: true,
+                            description: [variable['description'], variable['hint']].compact.join(' ')
+        end
+
         testscript_step(:setup, 'Setup', 'Create the fixtures, resolve the variables and run the setup actions.') do
-          start_testscript(definition, root_dir)
+          env = variables.to_h { |input_name, variable| [variable['name'], send(input_name)] }
+          start_testscript(definition, root_dir, env.compact_blank)
         end
 
         definition.fetch('test', []).each.with_index(1) do |test, index|
@@ -40,6 +48,14 @@ module InfernoTemplate
           finish_testscript
         end
       end
+    end
+
+    VALUE_KEYS = %w[defaultValue expression path headerField].freeze
+
+    # Input names (`testscript_<variable>`) of the variables without a value of their own
+    def self.input_variables(definition)
+      definition.fetch('variable', []).reject { |variable| VALUE_KEYS.any? { |key| variable.key?(key) } }
+        .to_h { |variable| [:"testscript_#{variable['name'].underscore.gsub(/\W/, '_')}", variable] }
     end
 
     # Group-level macro for the generated tests
@@ -56,8 +72,8 @@ module InfernoTemplate
     # What every generated test runs with. The group's evaluator lives in `scratch`, which all
     # tests of one run share
     module Runner
-      def start_testscript(definition, root_dir)
-        state = scratch[testscript_key] = { evaluator: TestscriptEval::Evaluator.new(definition, {}, root_dir:) }
+      def start_testscript(definition, root_dir, env = {})
+        state = scratch[testscript_key] = { evaluator: TestscriptEval::Evaluator.new(definition, env, root_dir:) }
         with_testscript(state[:evaluator], &:start)
         state[:ready] = true
       end
@@ -86,7 +102,9 @@ module InfernoTemplate
       # Binds the evaluator to this test's FHIR client and validator, and turns failed TestScript
       # asserts into failed tests; other TestscriptEval errors make the test an error
       def with_testscript(evaluator)
-        evaluator.client = TestscriptEval::Client.new(fhir_client) { |reply| store_request('outgoing') { reply } }
+        evaluator.client = TestscriptEval::Client.new(fhir_client, xml: xml_support == 'true') do |reply|
+          store_request('outgoing') { reply }
+        end
         evaluator.validator = method(:testscript_validation_errors)
         yield evaluator
       rescue TestscriptEval::AssertionFailed => e

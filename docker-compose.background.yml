@@ -4,7 +4,10 @@ services:
     environment:
       # Defines how long validator sessions last if unused, in minutes:
       # Negative values mean sessions never expire, 0 means sessions immediately expire
-      SESSION_CACHE_DURATION: -1
+      SESSION_CACHE_DURATION: 2
+      # Every suite has a session of its own with its own copy of the packages: cap the heap, so the
+      # JVM collects expired sessions instead of growing until Docker kills it
+      JAVA_TOOL_OPTIONS: -Xmx4g
     volumes:
       - ./data/igs:/app/igs
       # To let the service share your local FHIR package cache,

@@ -1,0 +1,44 @@
+{
+  "resourceType": "Location",
+  "id": "ie-core-location-example",
+  "meta": {
+    "profile": [
+      "https://hl7-ie.github.io/ie-core/fhir/ie/core/StructureDefinition/ie-core-location"
+    ]
+  },
+  "status": "active",
+  "name": "St. James's Hospital – GP Clinic",
+  "mode": "instance",
+  "type": [
+    {
+      "coding": [
+        {
+          "code": "HOSP",
+          "system": "http://terminology.hl7.org/CodeSystem/v3-RoleCode",
+          "display": "Hospital"
+        }
+      ]
+    }
+  ],
+  "telecom": [
+    {
+      "system": "phone",
+      "value": "+353 1 410 3456",
+      "use": "work"
+    }
+  ],
+  "address": {
+    "use": "work",
+    "line": [
+      "James's Street"
+    ],
+    "city": "Dublin",
+    "state": "Dublin",
+    "postalCode": "D08 NHY1",
+    "country": "IE"
+  },
+  "managingOrganization": {
+    "reference": "Organization/ie-core-organization-example",
+    "display": "St. James's Hospital"
+  }
+}

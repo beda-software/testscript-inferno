@@ -1,0 +1,205 @@
+{
+  "resourceType": "TestScript",
+  "resourceDefinition": "http://hl7.org/fhir/StructureDefinition/TestScript|0.1.0-snapshot1",
+  "id": "testscript-example-readcommon",
+  "text": {
+    "status": "generated",
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: TestScript testscript-example-readcommon</b></p><a name=\"testscript-example-readcommon\"> </a><a name=\"hctestscript-example-readcommon\"> </a><p><b>url</b>: <a href=\"http://hl7.org/fhir/TestScript/testscript-example-readcommon\">http://hl7.org/fhir/TestScript/testscript-example-readcommon</a></p><p><b>identifier</b>: <a href=\"http://terminology.hl7.org/7.1.0/NamingSystem-uri.html\" title=\"As defined by RFC 3986 (http://www.ietf.org/rfc/rfc3986.txt)(with many schemes defined in many RFCs). For OIDs and UUIDs, use the URN form (urn:oid:(note: lowercase) and urn:uuid:). See http://www.ietf.org/rfc/rfc3001.txt and http://www.ietf.org/rfc/rfc4122.txt \r\n\r\nThis oid is used as an identifier II.root to indicate the the extension is an absolute URI (technically, an IRI). Typically, this is used for OIDs and GUIDs. Note that when this OID is used with OIDs and GUIDs, the II.extension should start with urn:oid or urn:uuid: \r\n\r\nNote that this OID is created to aid with interconversion between CDA and FHIR - FHIR uses urn:ietf:rfc:3986 as equivalent to this OID. URIs as identifiers appear more commonly in FHIR.\r\n\r\nThis OID may also be used in CD.codeSystem.\">Uniform Resource Identifier (URI)</a>/urn:oid:2.16.840.1.113883.4.642.12.8</p><p><b>version</b>: 1.0</p><p><b>name</b>: TestScriptExampleReadCommon</p><p><b>title</b>: TestScript Example Read Common</p><p><b>status</b>: Draft</p><p><b>experimental</b>: false</p><p><b>date</b>: 2024-04-24</p><p><b>publisher</b>: HL7 International / FHIR Infrastructure</p><p><b>contact</b>: Support: <a href=\"mailto:support@HL7.org\">support@HL7.org</a></p><p><b>description</b>: </p><div><p>TestScript example resource showing the use of the common element to reuse actions within the test element. Each test will perform a Patient read operation utilizing user defined dynamic variables that will hold the Patient resource id values.</p>\n</div><p><b>purpose</b>: </p><div><p>Patient Read Operation</p>\n</div><p><b>copyright</b>: </p><div><p>© HL7.org 2011+</p>\n</div><h3>Scopes</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Artifact</b></td><td><b>Conformance</b></td><td><b>Phase</b></td></tr><tr><td style=\"display: none\">*</td><td><a href=\"http://hl7.org/fhir/R5/patient.html\">Patient</a></td><td><span title=\"Codes:{http://hl7.org/fhir/testscript-scope-conformance-codes optional}\">Optional</span></td><td><span title=\"Codes:{http://hl7.org/fhir/testscript-scope-phase-codes unit}\">Unit</span></td></tr></table><p><b>profile</b>: <a href=\"http://hl7.org/fhir/R5/patient.html\">Patient</a></p><blockquote><p><b>variable</b></p><p><b>name</b>: PatientResourceId1</p><p><b>defaultValue</b>: f001</p></blockquote><blockquote><p><b>variable</b></p><p><b>name</b>: PatientResourceId2</p><p><b>defaultValue</b>: f002</p></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>PatientRead1</blockquote><p><b>name</b>: Patient Read Test 1</p><p><b>description</b>: Read a known Patient (default id 'f001') and validate response using common action asserts.</p><blockquote><p><b>action</b></p><h3>Operations</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Type</b></td><td><b>Resource</b></td><td><b>Description</b></td><td><b>Accept</b></td><td><b>EncodeRequestUrl</b></td><td><b>Params</b></td></tr><tr><td style=\"display: none\">*</td><td><a href=\"http://hl7.org/fhir/R5/codesystem-restful-interaction.html#restful-interaction-read\">FHIR Restful Interactions: read</a> (read)</td><td><a href=\"http://hl7.org/fhir/R5/patient.html\">http://hl7.org/fhir/StructureDefinition/Patient</a></td><td>Read the known Patient resource on the destination test system using the user defined dynamic variable ${PatientResourceId1}.</td><td>xml</td><td>true</td><td>/${PatientResourceId1}</td></tr></table></blockquote><blockquote><p><b>action</b></p><h3>Commons</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>KeyRef</b></td></tr><tr><td style=\"display: none\">*</td><td>CommonReadActionAsserts</td></tr></table></blockquote></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>PatientRead2</blockquote><p><b>name</b>: Patient Read Test 2</p><p><b>description</b>: Read a known Patient (default id 'f002') and validate response using common action asserts.</p><blockquote><p><b>action</b></p><h3>Operations</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Type</b></td><td><b>Resource</b></td><td><b>Description</b></td><td><b>Accept</b></td><td><b>EncodeRequestUrl</b></td><td><b>Params</b></td></tr><tr><td style=\"display: none\">*</td><td><a href=\"http://hl7.org/fhir/R5/codesystem-restful-interaction.html#restful-interaction-read\">FHIR Restful Interactions: read</a> (read)</td><td><a href=\"http://hl7.org/fhir/R5/patient.html\">http://hl7.org/fhir/StructureDefinition/Patient</a></td><td>Read the known Patient resource on the destination test system using the user defined dynamic variable ${PatientResourceId2}.</td><td>xml</td><td>true</td><td>/${PatientResourceId2}</td></tr></table></blockquote><blockquote><p><b>action</b></p><h3>Commons</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>KeyRef</b></td></tr><tr><td style=\"display: none\">*</td><td>CommonReadActionAsserts</td></tr></table></blockquote></blockquote><blockquote><p><b>common</b></p><p><b>key</b>: CommonReadActionAsserts</p><p><b>name</b>: Common Read Action Asserts</p><p><b>description</b>: The common action asserts to evaluate and validate conformance to the base FHIR read operation.</p><blockquote><p><b>action</b></p><h3>Asserts</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Description</b></td><td><b>Response</b></td><td><b>StopTestOnFail</b></td><td><b>WarningOnly</b></td></tr><tr><td style=\"display: none\">*</td><td>Confirm that the returned HTTP status is 200(OK).</td><td>OK</td><td>false</td><td>false</td></tr></table></blockquote><blockquote><p><b>action</b></p><h3>Asserts</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Description</b></td><td><b>ContentType</b></td><td><b>StopTestOnFail</b></td><td><b>WarningOnly</b></td></tr><tr><td style=\"display: none\">*</td><td>Confirm that the returned format is XML.</td><td>xml</td><td>false</td><td>false</td></tr></table></blockquote><blockquote><p><b>action</b></p><h3>Asserts</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Description</b></td><td><b>HeaderField</b></td><td><b>Operator</b></td><td><b>StopTestOnFail</b></td><td><b>WarningOnly</b></td></tr><tr><td style=\"display: none\">*</td><td>Confirm that the returned HTTP Header Last-Modified is present. Warning only as the server might not support versioning.</td><td>Last-Modified</td><td>notEmpty</td><td>false</td><td>true</td></tr></table></blockquote><blockquote><p><b>action</b></p><h3>Asserts</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Description</b></td><td><b>Resource</b></td><td><b>StopTestOnFail</b></td><td><b>WarningOnly</b></td></tr><tr><td style=\"display: none\">*</td><td>Confirm that the returned resource type is Patient.</td><td><a href=\"http://hl7.org/fhir/R5/patient.html\">http://hl7.org/fhir/StructureDefinition/Patient</a></td><td>false</td><td>false</td></tr></table></blockquote><blockquote><p><b>action</b></p><h3>Asserts</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Description</b></td><td><b>StopTestOnFail</b></td><td><b>ValidateProfileId</b></td><td><b>WarningOnly</b></td></tr><tr><td style=\"display: none\">*</td><td>Confirm that the returned Patient conforms to the base FHIR specification.</td><td>false</td><td>patient-profile</td><td>false</td></tr></table></blockquote></blockquote></div>"
+  },
+  "url": "http://hl7.org/fhir/TestScript/testscript-example-readcommon",
+  "identifier": [
+    {
+      "system": "urn:ietf:rfc:3986",
+      "value": "urn:oid:2.16.840.1.113883.4.642.12.8"
+    }
+  ],
+  "version": "1.0",
+  "name": "TestScriptExampleReadCommon",
+  "title": "TestScript Example Read Common",
+  "status": "draft",
+  "experimental": false,
+  "date": "2024-04-24",
+  "publisher": "HL7 International / FHIR Infrastructure",
+  "contact": [
+    {
+      "name": "Support",
+      "telecom": [
+        {
+          "system": "email",
+          "value": "support@HL7.org",
+          "use": "work"
+        }
+      ]
+    }
+  ],
+  "description": "TestScript example resource showing the use of the common element to reuse actions within the test element. Each test will perform a Patient read operation utilizing user defined dynamic variables that will hold the Patient resource id values.",
+  "purpose": "Patient Read Operation",
+  "copyright": "© HL7.org 2011+",
+  "scope": [
+    {
+      "artifact": "http://hl7.org/fhir/StructureDefinition/Patient",
+      "conformance": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/testscript-scope-conformance-codes",
+            "code": "optional"
+          }
+        ]
+      },
+      "phase": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/testscript-scope-phase-codes",
+            "code": "unit"
+          }
+        ]
+      }
+    }
+  ],
+  "profile": [
+    "http://hl7.org/fhir/StructureDefinition/Patient"
+  ],
+  "_profile": [
+    {
+      "id": "patient-profile"
+    }
+  ],
+  "variable": [
+    {
+      "name": "PatientResourceId1",
+      "defaultValue": "f001"
+    },
+    {
+      "name": "PatientResourceId2",
+      "defaultValue": "f002"
+    }
+  ],
+  "test": [
+    {
+      "id": "PatientRead1",
+      "name": "Patient Read Test 1",
+      "description": "Read a known Patient (default id 'f001') and validate response using common action asserts.",
+      "action": [
+        {
+          "operation": {
+            "type": {
+              "system": "http://hl7.org/fhir/restful-interaction",
+              "code": "read"
+            },
+            "resource": "Patient",
+            "description": "Read the known Patient resource on the destination test system using the user defined dynamic variable ${PatientResourceId1}.",
+            "accept": "xml",
+            "encodeRequestUrl": true,
+            "params": "/${PatientResourceId1}"
+          }
+        },
+        {
+          "common": {
+            "keyRef": "CommonReadActionAsserts"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PatientRead2",
+      "name": "Patient Read Test 2",
+      "description": "Read a known Patient (default id 'f002') and validate response using common action asserts.",
+      "action": [
+        {
+          "operation": {
+            "type": {
+              "system": "http://hl7.org/fhir/restful-interaction",
+              "code": "read"
+            },
+            "resource": "Patient",
+            "description": "Read the known Patient resource on the destination test system using the user defined dynamic variable ${PatientResourceId2}.",
+            "accept": "xml",
+            "encodeRequestUrl": true,
+            "params": "/${PatientResourceId2}"
+          }
+        },
+        {
+          "common": {
+            "keyRef": "CommonReadActionAsserts"
+          }
+        }
+      ]
+    }
+  ],
+  "common": [
+    {
+      "key": "CommonReadActionAsserts",
+      "name": "Common Read Action Asserts",
+      "description": "The common action asserts to evaluate and validate conformance to the base FHIR read operation.",
+      "action": [
+        {
+          "assert": {
+            "description": "Confirm that the returned HTTP status is 200(OK).",
+            "response": "okay",
+            "stopTestOnFail": false,
+            "warningOnly": false
+          }
+        },
+        {
+          "assert": {
+            "description": "Confirm that the returned format is XML.",
+            "contentType": "xml",
+            "stopTestOnFail": false,
+            "warningOnly": false
+          }
+        },
+        {
+          "assert": {
+            "description": "Confirm that the returned HTTP Header Last-Modified is present. Warning only as the server might not support versioning.",
+            "headerField": "Last-Modified",
+            "operator": "notEmpty",
+            "stopTestOnFail": false,
+            "warningOnly": true
+          }
+        },
+        {
+          "assert": {
+            "description": "Confirm that the returned resource type is Patient.",
+            "resource": "Patient",
+            "stopTestOnFail": false,
+            "warningOnly": false
+          }
+        },
+        {
+          "assert": {
+            "description": "Confirm that the returned Patient conforms to the base FHIR specification.",
+            "stopTestOnFail": false,
+            "validateProfileId": "patient-profile",
+            "warningOnly": false
+          }
+        }
+      ]
+    }
+  ],
+  "fixture": [
+    {
+      "id": "server-Organization-f001",
+      "autocreate": true,
+      "autodelete": true,
+      "resource": {
+        "reference": "/server/Organization-f001.json"
+      }
+    },
+    {
+      "id": "server-Patient-f001",
+      "resource": {
+        "reference": "/server/Patient-f001.json"
+      },
+      "autocreate": true,
+      "autodelete": true
+    },
+    {
+      "id": "server-Patient-f002",
+      "resource": {
+        "reference": "/server/Patient-f002.json"
+      },
+      "autocreate": true,
+      "autodelete": true
+    }
+  ]
+}

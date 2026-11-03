@@ -1,0 +1,152 @@
+{
+  "resourceType": "Patient",
+  "id": "ie-core-patient-example",
+  "meta": {
+    "profile": [
+      "https://hl7-ie.github.io/ie-core/fhir/ie/core/StructureDefinition/ie-core-patient-eprescription"
+    ]
+  },
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/StructureDefinition/individual-recordedSexOrGender",
+      "extension": [
+        {
+          "url": "value",
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "code": "male",
+                "system": "http://hl7.org/fhir/administrative-gender",
+                "display": "Male"
+              }
+            ]
+          }
+        },
+        {
+          "url": "type",
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "code": "76689-9",
+                "system": "http://loinc.org",
+                "display": "Sex assigned at birth"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "identifier": [
+    {
+      "system": "https://hl7-ie.github.io/ie-core/fhir/ie/core/sid/ihi",
+      "type": {
+        "coding": [
+          {
+            "code": "NI",
+            "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+            "display": "National unique individual identifier"
+          }
+        ]
+      },
+      "value": "210000000012345678"
+    },
+    {
+      "system": "https://hl7-ie.github.io/ie-core/fhir/ie/core/sid/gms",
+      "type": {
+        "coding": [
+          {
+            "code": "medical-card",
+            "system": "https://hl7-ie.github.io/ie-core/fhir/ie/core/CodeSystem/ie-core-pcrs-scheme-type",
+            "display": "Medical card scheme number"
+          }
+        ]
+      },
+      "value": "MC-0012345",
+      "assigner": {
+        "display": "HSE"
+      }
+    }
+  ],
+  "active": true,
+  "name": [
+    {
+      "use": "official",
+      "family": "Murphy",
+      "given": [
+        "John",
+        "Patrick"
+      ],
+      "prefix": [
+        "Mr."
+      ]
+    }
+  ],
+  "gender": "male",
+  "birthDate": "1978-05-15",
+  "address": [
+    {
+      "use": "home",
+      "type": "physical",
+      "line": [
+        "42 Pearse Street"
+      ],
+      "city": "Dublin",
+      "state": "Dublin",
+      "postalCode": "D02 XY12",
+      "country": "IE"
+    }
+  ],
+  "telecom": [
+    {
+      "system": "phone",
+      "value": "+353 1 555 0123",
+      "use": "home"
+    },
+    {
+      "system": "email",
+      "value": "john.murphy@example.ie",
+      "use": "home"
+    },
+    {
+      "system": "phone",
+      "value": "+353 87 123 4567",
+      "use": "mobile"
+    }
+  ],
+  "communication": [
+    {
+      "language": {
+        "coding": [
+          {
+            "code": "en",
+            "system": "urn:ietf:bcp:47",
+            "display": "English"
+          }
+        ]
+      },
+      "preferred": true
+    },
+    {
+      "language": {
+        "coding": [
+          {
+            "code": "ga",
+            "system": "urn:ietf:bcp:47",
+            "display": "Irish"
+          }
+        ]
+      }
+    }
+  ],
+  "generalPractitioner": [
+    {
+      "reference": "Practitioner/ie-core-practitioner-example",
+      "display": "Dr. Sarah O'Brien"
+    }
+  ],
+  "managingOrganization": {
+    "reference": "Organization/ie-core-organization-example",
+    "display": "St. James's Hospital"
+  }
+}

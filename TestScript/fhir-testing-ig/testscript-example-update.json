@@ -1,0 +1,195 @@
+{
+  "resourceType": "TestScript",
+  "resourceDefinition": "http://hl7.org/fhir/StructureDefinition/TestScript|0.1.0-snapshot1",
+  "id": "testscript-example-update",
+  "text": {
+    "status": "generated",
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: TestScript testscript-example-update</b></p><a name=\"testscript-example-update\"> </a><a name=\"hctestscript-example-update\"> </a><p><b>url</b>: <a href=\"http://hl7.org/fhir/R5/testscript-example-update.html\">http://hl7.org/fhir/TestScript/testscript-example-update</a></p><p><b>identifier</b>: <a href=\"http://terminology.hl7.org/7.1.0/NamingSystem-uri.html\" title=\"As defined by RFC 3986 (http://www.ietf.org/rfc/rfc3986.txt)(with many schemes defined in many RFCs). For OIDs and UUIDs, use the URN form (urn:oid:(note: lowercase) and urn:uuid:). See http://www.ietf.org/rfc/rfc3001.txt and http://www.ietf.org/rfc/rfc4122.txt \r\n\r\nThis oid is used as an identifier II.root to indicate the the extension is an absolute URI (technically, an IRI). Typically, this is used for OIDs and GUIDs. Note that when this OID is used with OIDs and GUIDs, the II.extension should start with urn:oid or urn:uuid: \r\n\r\nNote that this OID is created to aid with interconversion between CDA and FHIR - FHIR uses urn:ietf:rfc:3986 as equivalent to this OID. URIs as identifiers appear more commonly in FHIR.\r\n\r\nThis OID may also be used in CD.codeSystem.\">Uniform Resource Identifier (URI)</a>/urn:oid:2.16.840.1.113883.4.642.12.5</p><p><b>version</b>: 1.0</p><p><b>name</b>: TestScriptExampleUpdate</p><p><b>title</b>: TestScript Example Update</p><p><b>status</b>: Draft</p><p><b>experimental</b>: false</p><p><b>date</b>: 2017-01-18</p><p><b>publisher</b>: HL7 International / FHIR Infrastructure</p><p><b>contact</b>: Support: <a href=\"mailto:support@HL7.org\">support@HL7.org</a></p><p><b>description</b>: </p><div><p>TestScript example resource with setup to delete if present and create a new instance of a Patient; and single test definition to update that Patient with various asserts.</p>\n</div><p><b>purpose</b>: </p><div><p>Patient (Conditional) Create, Update, Delete Operations</p>\n</div><p><b>copyright</b>: </p><div><p>© HL7.org 2011+</p>\n</div><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>fixture-patient-create</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p><p><b>resource</b>: <a href=\"http://hl7.org/fhir/R5/patient-example.html\">Peter Chalmers</a></p></blockquote><blockquote><p><b>fixture</b></p><blockquote><p><b>id</b></p>fixture-patient-update</blockquote><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p><p><b>resource</b>: <a href=\"http://hl7.org/fhir/R5/patient-example-a.html\">Donald Duck</a></p></blockquote><p><b>profile</b>: <a href=\"http://hl7.org/fhir/R5/patient.html\">Patient</a></p><blockquote><p><b>variable</b></p><p><b>name</b>: createResourceId</p><h3>Expressions</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Language</b></td><td><b>Expression</b></td></tr><tr><td style=\"display: none\">*</td><td>application/xml</td><td>Patient/id</td></tr></table><p><b>sourceId</b>: fixture-patient-create</p></blockquote><blockquote><p><b>setup</b></p><blockquote><p><b>action</b></p><h3>Operations</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Type</b></td><td><b>Resource</b></td><td><b>Label</b></td><td><b>Description</b></td><td><b>Accept</b></td><td><b>EncodeRequestUrl</b></td><td><b>Params</b></td></tr><tr><td style=\"display: none\">*</td><td><a href=\"http://hl7.org/fhir/R5/codesystem-restful-interaction.html#restful-interaction-delete\">FHIR Restful Interactions: delete</a> (delete)</td><td><a href=\"http://hl7.org/fhir/R5/patient.html\">http://hl7.org/fhir/StructureDefinition/Patient</a></td><td>SetupDeletePatient</td><td>Execute a delete operation to insure the patient does not exist on the server.</td><td>xml</td><td>true</td><td>/${createResourceId}</td></tr></table></blockquote><blockquote><p><b>action</b></p><h3>Asserts</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Description</b></td><td><b>Direction</b></td><td><b>Operator</b></td><td><b>ResponseCode</b></td><td><b>StopTestOnFail</b></td><td><b>WarningOnly</b></td></tr><tr><td style=\"display: none\">*</td><td>Confirm that the returned HTTP status is 200(OK) or 204(No Content).</td><td>response</td><td>in</td><td>200,204</td><td>false</td><td>false</td></tr></table></blockquote><blockquote><p><b>action</b></p><h3>Operations</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Type</b></td><td><b>Resource</b></td><td><b>Label</b></td><td><b>Description</b></td><td><b>Accept</b></td><td><b>ContentType</b></td><td><b>EncodeRequestUrl</b></td><td><b>Params</b></td><td><b>SourceId</b></td></tr><tr><td style=\"display: none\">*</td><td><a href=\"http://hl7.org/fhir/R5/codesystem-restful-interaction.html#restful-interaction-update\">FHIR Restful Interactions: update</a> (update)</td><td><a href=\"http://hl7.org/fhir/R5/patient.html\">http://hl7.org/fhir/StructureDefinition/Patient</a></td><td>SetupCreatePatient</td><td>Create patient resource on test server using the contents of fixture-patient-create</td><td>xml</td><td>xml</td><td>true</td><td>/${createResourceId}</td><td>fixture-patient-create</td></tr></table></blockquote><blockquote><p><b>action</b></p><h3>Asserts</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Description</b></td><td><b>Direction</b></td><td><b>ResponseCode</b></td><td><b>StopTestOnFail</b></td><td><b>WarningOnly</b></td></tr><tr><td style=\"display: none\">*</td><td>Confirm that the returned HTTP status is 201(Created).</td><td>response</td><td>201</td><td>false</td><td>false</td></tr></table></blockquote></blockquote><blockquote><p><b>test</b></p><blockquote><p><b>id</b></p>01-UpdatePatient</blockquote><p><b>name</b>: Update Patient</p><p><b>description</b>: Update a Patient and validate response.</p><blockquote><p><b>action</b></p><h3>Operations</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Type</b></td><td><b>Resource</b></td><td><b>Label</b></td><td><b>Description</b></td><td><b>Accept</b></td><td><b>ContentType</b></td><td><b>EncodeRequestUrl</b></td><td><b>Params</b></td><td><b>SourceId</b></td></tr><tr><td style=\"display: none\">*</td><td><a href=\"http://hl7.org/fhir/R5/codesystem-restful-interaction.html#restful-interaction-update\">FHIR Restful Interactions: update</a> (update)</td><td><a href=\"http://hl7.org/fhir/R5/patient.html\">http://hl7.org/fhir/StructureDefinition/Patient</a></td><td>SetupUpdatePatient</td><td>Update patient resource on test server using the contents of fixture-patient-update</td><td>xml</td><td>xml</td><td>true</td><td>/${createResourceId}</td><td>fixture-patient-update</td></tr></table></blockquote><blockquote><p><b>action</b></p><h3>Asserts</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Description</b></td><td><b>Response</b></td><td><b>StopTestOnFail</b></td><td><b>WarningOnly</b></td></tr><tr><td style=\"display: none\">*</td><td>Confirm that the returned HTTP status is 200(OK).</td><td>OK</td><td>false</td><td>false</td></tr></table></blockquote><blockquote><p><b>action</b></p><h3>Asserts</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Description</b></td><td><b>ContentType</b></td><td><b>StopTestOnFail</b></td><td><b>WarningOnly</b></td></tr><tr><td style=\"display: none\">*</td><td>Confirm that the returned format is XML.</td><td>xml</td><td>false</td><td>false</td></tr></table></blockquote><blockquote><p><b>action</b></p><h3>Asserts</h3><table class=\"grid\"><tr><td style=\"display: none\">-</td><td><b>Description</b></td><td><b>HeaderField</b></td><td><b>Operator</b></td><td><b>StopTestOnFail</b></td><td><b>WarningOnly</b></td></tr><tr><td style=\"display: none\">*</td><td>Confirm that the returned HTTP Header Last-Modified is present. Warning only as the server might not support versioning.</td><td>Last-Modified</td><td>notEmpty</td><td>false</td><td>true</td></tr></table></blockquote></blockquote></div>"
+  },
+  "url": "http://hl7.org/fhir/TestScript/testscript-example-update",
+  "identifier": [
+    {
+      "system": "urn:ietf:rfc:3986",
+      "value": "urn:oid:2.16.840.1.113883.4.642.12.5"
+    }
+  ],
+  "version": "1.0",
+  "name": "TestScriptExampleUpdate",
+  "title": "TestScript Example Update",
+  "status": "draft",
+  "experimental": false,
+  "date": "2017-01-18",
+  "publisher": "HL7 International / FHIR Infrastructure",
+  "contact": [
+    {
+      "name": "Support",
+      "telecom": [
+        {
+          "system": "email",
+          "value": "support@HL7.org",
+          "use": "work"
+        }
+      ]
+    }
+  ],
+  "description": "TestScript example resource with setup to delete if present and create a new instance of a Patient; and single test definition to update that Patient with various asserts.",
+  "purpose": "Patient (Conditional) Create, Update, Delete Operations",
+  "copyright": "© HL7.org 2011+",
+  "fixture": [
+    {
+      "id": "server-Organization-1",
+      "autocreate": true,
+      "autodelete": true,
+      "resource": {
+        "reference": "/server/Organization-1.json"
+      }
+    },
+    {
+      "id": "fixture-patient-update",
+      "autocreate": true,
+      "autodelete": true,
+      "resource": {
+        "reference": "/server/Patient-pat1.json",
+        "display": "Donald Duck"
+      }
+    },
+    {
+      "id": "server-Patient-pat2",
+      "autocreate": true,
+      "autodelete": true,
+      "resource": {
+        "reference": "/server/Patient-pat2.json"
+      }
+    },
+    {
+      "id": "fixture-patient-create",
+      "autocreate": false,
+      "autodelete": false,
+      "resource": {
+        "reference": "/server/Patient-example.json",
+        "display": "Peter Chalmers"
+      }
+    }
+  ],
+  "profile": [
+    "http://hl7.org/fhir/StructureDefinition/Patient"
+  ],
+  "_profile": [
+    {
+      "id": "patient-profile"
+    }
+  ],
+  "variable": [
+    {
+      "name": "createResourceId",
+      "expression": {
+        "language": "application/xml",
+        "expression": "Patient/id"
+      },
+      "sourceId": "fixture-patient-create"
+    }
+  ],
+  "setup": {
+    "action": [
+      {
+        "operation": {
+          "type": {
+            "system": "http://hl7.org/fhir/restful-interaction",
+            "code": "delete"
+          },
+          "resource": "Patient",
+          "label": "SetupDeletePatient",
+          "description": "Execute a delete operation to insure the patient does not exist on the server.",
+          "accept": "xml",
+          "encodeRequestUrl": true,
+          "params": "/${createResourceId}"
+        }
+      },
+      {
+        "assert": {
+          "description": "Confirm that the returned HTTP status is 200(OK) or 204(No Content).",
+          "direction": "response",
+          "operator": "in",
+          "responseCode": "200,204",
+          "stopTestOnFail": false,
+          "warningOnly": false
+        }
+      },
+      {
+        "operation": {
+          "type": {
+            "system": "http://hl7.org/fhir/restful-interaction",
+            "code": "update"
+          },
+          "resource": "Patient",
+          "label": "SetupCreatePatient",
+          "description": "Create patient resource on test server using the contents of fixture-patient-create",
+          "accept": "xml",
+          "contentType": "xml",
+          "encodeRequestUrl": true,
+          "params": "/${createResourceId}",
+          "sourceId": "fixture-patient-create"
+        }
+      },
+      {
+        "assert": {
+          "description": "Confirm that the returned HTTP status is 201(Created).",
+          "direction": "response",
+          "responseCode": "201",
+          "stopTestOnFail": false,
+          "warningOnly": false
+        }
+      }
+    ]
+  },
+  "test": [
+    {
+      "id": "01-UpdatePatient",
+      "name": "Update Patient",
+      "description": "Update a Patient and validate response.",
+      "action": [
+        {
+          "operation": {
+            "type": {
+              "system": "http://hl7.org/fhir/restful-interaction",
+              "code": "update"
+            },
+            "resource": "Patient",
+            "label": "SetupUpdatePatient",
+            "description": "Update patient resource on test server using the contents of fixture-patient-update",
+            "accept": "xml",
+            "contentType": "xml",
+            "encodeRequestUrl": true,
+            "params": "/${createResourceId}",
+            "sourceId": "fixture-patient-update"
+          }
+        },
+        {
+          "assert": {
+            "description": "Confirm that the returned HTTP status is 200(OK).",
+            "response": "okay",
+            "stopTestOnFail": false,
+            "warningOnly": false
+          }
+        },
+        {
+          "assert": {
+            "description": "Confirm that the returned format is XML.",
+            "contentType": "xml",
+            "stopTestOnFail": false,
+            "warningOnly": false
+          }
+        },
+        {
+          "assert": {
+            "description": "Confirm that the returned HTTP Header Last-Modified is present. Warning only as the server might not support versioning.",
+            "headerField": "Last-Modified",
+            "operator": "notEmpty",
+            "stopTestOnFail": false,
+            "warningOnly": true
+          }
+        }
+      ]
+    }
+  ]
+}

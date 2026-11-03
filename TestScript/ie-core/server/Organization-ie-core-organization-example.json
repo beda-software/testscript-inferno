@@ -1,0 +1,47 @@
+{
+  "resourceType": "Organization",
+  "id": "ie-core-organization-example",
+  "meta": {
+    "profile": [
+      "https://hl7-ie.github.io/ie-core/fhir/ie/core/StructureDefinition/ie-core-organization"
+    ]
+  },
+  "active": true,
+  "type": [
+    {
+      "coding": [
+        {
+          "code": "prov",
+          "system": "http://terminology.hl7.org/CodeSystem/organization-type",
+          "display": "Healthcare Provider"
+        }
+      ]
+    }
+  ],
+  "name": "St. James's Hospital",
+  "telecom": [
+    {
+      "system": "phone",
+      "value": "+353 1 410 3000",
+      "use": "work"
+    },
+    {
+      "system": "email",
+      "value": "info@stjames.ie",
+      "use": "work"
+    }
+  ],
+  "address": [
+    {
+      "use": "work",
+      "type": "physical",
+      "line": [
+        "James's Street"
+      ],
+      "city": "Dublin",
+      "state": "Dublin",
+      "postalCode": "D08 NHY1",
+      "country": "IE"
+    }
+  ]
+}
