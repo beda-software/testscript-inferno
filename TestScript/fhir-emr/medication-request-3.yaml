@@ -1,0 +1,13 @@
+intent: plan
+status: active
+subject:
+  reference: Patient/patient2
+  display: Second Patient
+requester:
+  reference: Practitioner/practitioner2
+  display: Basic-2 Practitioner
+medicationReference:
+  reference: Medication/medication-3
+  display: Edarbi 80mg 25 tablets
+id: medication-request-3
+resourceType: MedicationRequest

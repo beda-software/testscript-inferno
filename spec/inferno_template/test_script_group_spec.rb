@@ -68,17 +68,19 @@ RSpec.describe InfernoTemplate::TestScriptGroup do
 
     InfernoTemplate::TestScriptSuite.subclasses.each do |ig_suite|
       it "defines a group per TestScript in #{ig_suite.id}, with Setup, its tests and Teardown" do
-        scripts = Dir[File.join(ig_suite.testscript_dir, '*.json')]
-          .map { |path| JSON.parse(File.read(path)) }
-          .select { |definition| definition['resourceType'] == 'TestScript' }
+        scripts = Dir[File.join(ig_suite.testscript_dir, '*.{json,yaml,yml}')]
+          .map { |path| TestscriptEval.load_file(path) }
+          .select { |definition| definition.is_a?(Hash) && definition['resourceType'] == 'TestScript' }
 
         expect(ig_suite.groups.map(&:title)).to match_array(scripts.map { |script| script['title'] || script['name'] })
+        expect(ig_suite.groups.map(&:id).uniq.length).to eq(scripts.length)
 
         scripts.each do |script|
-          group = ig_suite.groups.find { |g| g.id == "#{ig_suite.id}-#{script['id'].tr('-', '_')}" }
-          expect(group).to be_run_as_group
           tests = script.fetch('test', []).map.with_index(1) { |test, index| test['name'] || "Test #{index}" }
-          expect(group.tests.map(&:title)).to eq(['Setup', *tests, 'Teardown'])
+          group = ig_suite.groups.find do |g|
+            g.title == (script['title'] || script['name']) && g.tests.map(&:title) == ['Setup', *tests, 'Teardown']
+          end
+          expect(group).to be_run_as_group
         end
       end
     end

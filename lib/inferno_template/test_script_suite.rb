@@ -69,7 +69,7 @@ module InfernoTemplate
           end
         end
 
-        testscript_groups File.join(@testscript_dir, '*.json')
+        testscript_groups File.join(@testscript_dir, '*.{json,yaml,yml}')
       end
     end
   end

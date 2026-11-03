@@ -8,6 +8,9 @@ gem 'testscript_eval', path: 'testscript-eval-ruby'
 
 group :development, :test do
   gem 'debug'
+  # `inferno start` runs the web app and worker with foreman; `--watch` restarts them with rerun
+  gem 'foreman', require: false
+  gem 'rerun', require: false
   gem 'rubocop', '~> 1.9'
   gem 'rubocop-rspec', require: false
 end

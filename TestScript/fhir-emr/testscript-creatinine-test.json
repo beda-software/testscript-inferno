@@ -1,0 +1,211 @@
+{
+  "resourceType": "TestScript",
+  "id": "complete-encounter-questionnaire-ts-test",
+  "url": "https://beda.software/TestScript/creatinine",
+  "name": "creatinine-test",
+  "title": "Record a creatinine result",
+  "description": "Records a lab result with the Beda EMR creatinine questionnaire (`Questionnaire/creatinine`) and SDC\n`$extract`.\n\n- **Server prerequisites:** the seed `Questionnaire/creatinine`.\n- **Data:** creates `Patient/patient3` and `Practitioner/test-practitioner`; teardown deletes them and\n  the extracted Observation.",
+  "status": "draft",
+  "date": "2024-02-20",
+  "publisher": "Beda Software",
+  "contact": [
+    {
+      "name": "Support",
+      "telecom": [
+        {
+          "system": "email",
+          "value": "ilya@beda.software",
+          "use": "work"
+        },
+        {
+          "system": "email",
+          "value": "pavel.r@beda.software",
+          "use": "work"
+        }
+      ]
+    }
+  ],
+  "fixture": [
+    {
+      "id": "patient",
+      "resource": {
+        "reference": "file://patient1.yaml"
+      },
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "practitioner",
+      "resource": {
+        "reference": "file://practitioner.yaml"
+      },
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "creatinine-questionnaire-fixture",
+      "resource": {
+        "reference": "Questionnaire/creatinine"
+      },
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "creatinine-extract-parameters-fixture",
+      "resource": {
+        "reference": "file://creatinine-extract-parameters-fixture.yaml"
+      },
+      "autocreate": false,
+      "autodelete": false
+    }
+  ],
+  "setup": {
+    "action": [
+      {
+        "operation": {
+          "type": {
+            "code": "create",
+            "system": "http://terminology.hl7.org/CodeSystem/testscript-operation-codes"
+          },
+          "resource": "Patient",
+          "sourceId": "patient",
+          "responseId": "create-test-patient",
+          "description": "Create fixture resource",
+          "encodeRequestUrl": false
+        }
+      },
+      {
+        "assert": {
+          "description": "Confirm that the returned HTTP status is 201(created).",
+          "direction": "response",
+          "response": "created",
+          "warningOnly": false
+        }
+      },
+      {
+        "operation": {
+          "type": {
+            "code": "create",
+            "system": "http://terminology.hl7.org/CodeSystem/testscript-operation-codes"
+          },
+          "resource": "Practitioner",
+          "sourceId": "practitioner",
+          "responseId": "create-test-practitioner",
+          "description": "Create fixture resource",
+          "encodeRequestUrl": false
+        }
+      },
+      {
+        "assert": {
+          "description": "Confirm that the returned HTTP status is 201(created).",
+          "direction": "response",
+          "response": "created",
+          "warningOnly": false
+        }
+      }
+    ]
+  },
+  "test": [
+    {
+      "name": "Extract the creatinine Observation",
+      "description": "SDC `$extract` of a filled form, then exactly one Observation for `Patient/patient3`.",
+      "action": [
+        {
+          "operation": {
+            "type": {
+              "code": "extract",
+              "system": "http://terminology.hl7.org/CodeSystem/testscript-operation-codes"
+            },
+            "resource": "Questionnaire",
+            "description": "Questionnaire data extract",
+            "accept": "json",
+            "method": "post",
+            "targetId": "creatinine-questionnaire-fixture",
+            "sourceId": "creatinine-extract-parameters-fixture",
+            "encodeRequestUrl": false
+          }
+        },
+        {
+          "assert": {
+            "description": "Confirm that the extract returned HTTP status is 200(OK).",
+            "direction": "response",
+            "response": "okay",
+            "warningOnly": false
+          }
+        },
+        {
+          "operation": {
+            "description": "Search FHIR resources",
+            "type": {
+              "code": "search",
+              "system": "http://hl7.org/fhir/uv/sdc/OperationDefinition/QuestionnaireResponse-extract"
+            },
+            "resource": "Observation",
+            "encodeRequestUrl": false,
+            "params": "?subject=patient3"
+          }
+        },
+        {
+          "assert": {
+            "description": "Check is equal",
+            "resource": "Bundle",
+            "value": "1",
+            "operator": "equals",
+            "warningOnly": false,
+            "expression": "Bundle.total.toString()"
+          }
+        },
+        {
+          "assert": {
+            "description": "Check is equal",
+            "resource": "Bundle",
+            "value": "Patient/patient3",
+            "operator": "equals",
+            "warningOnly": false,
+            "expression": "Bundle.entry.resource.subject.reference"
+          }
+        }
+      ]
+    }
+  ],
+  "teardown": {
+    "action": [
+      {
+        "operation": {
+          "type": {
+            "code": "delete",
+            "system": "http://terminology.hl7.org/CodeSystem/testscript-operation-codes"
+          },
+          "resource": "Observation",
+          "description": "Delete test resources",
+          "params": "?subject=Patient/patient3",
+          "encodeRequestUrl": true
+        }
+      },
+      {
+        "operation": {
+          "type": {
+            "code": "delete",
+            "system": "http://terminology.hl7.org/CodeSystem/testscript-operation-codes"
+          },
+          "resource": "Patient",
+          "description": "Delete test resources",
+          "targetId": "create-test-patient",
+          "encodeRequestUrl": true
+        }
+      },
+      {
+        "operation": {
+          "type": {
+            "code": "delete",
+            "system": "http://terminology.hl7.org/CodeSystem/testscript-operation-codes"
+          },
+          "resource": "Practitioner",
+          "description": "Delete test resources",
+          "targetId": "create-test-practitioner",
+          "encodeRequestUrl": true
+        }
+      }
+    ]
+  }
+}

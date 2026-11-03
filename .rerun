@@ -1,0 +1,2 @@
+--dir lib,TestScript,testscript-eval-ruby/lib,config
+--pattern **/*.{rb,ru,json,yaml,yml,xml,fsh,tgz}

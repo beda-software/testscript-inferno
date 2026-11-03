@@ -8,19 +8,33 @@ module InfernoTemplate
   # The scripts run with testscript_eval, through the runnable's `fhir_client` and FHIR resource
   # validator, so requests and validation messages show up on each test.
   module TestScriptGroup
-    # Defines a group for every TestScript among the files matching `glob`; other resources
-    # (e.g. fixtures next to the scripts) are skipped
+    # Defines a group for every TestScript among the files matching `glob` (JSON or YAML); other
+    # resources (e.g. fixtures next to the scripts) are skipped
     def testscript_groups(glob)
       Dir[glob].each do |path|
         definition = TestscriptEval.load_file(path)
-        testscript_group(definition, root_dir: File.dirname(path)) if definition['resourceType'] == 'TestScript'
+        next unless definition.is_a?(Hash) && definition['resourceType'] == 'TestScript'
+
+        testscript_group(definition, root_dir: File.dirname(path), id: testscript_group_id(definition, path))
       end
     end
 
+    # The group id: the TestScript's id, or its file name when it has none or another script of
+    # the suite has the same one
+    def testscript_group_id(definition, path)
+      @testscript_group_ids ||= []
+      id = [definition['id'], File.basename(path, '.*')].compact
+        .find { |candidate| !@testscript_group_ids.include?(candidate) }
+      raise ArgumentError, "Two TestScripts named #{File.basename(path)}" unless id
+
+      @testscript_group_ids << id
+      id
+    end
+
     # Defines a group for a TestScript Hash; `root_dir` resolves its file:// fixture references
-    def testscript_group(definition, root_dir:)
+    def testscript_group(definition, root_dir:, id: definition['id'])
       group(definition['title'] || definition['name'],
-            id: definition['id'].tr('-', '_'), description: definition['description']) do
+            id: id.tr('-', '_'), description: definition['description']) do
         extend Steps
 
         # The tests share an evaluator and the fixtures it created on the server

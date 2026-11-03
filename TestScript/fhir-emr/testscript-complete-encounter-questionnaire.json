@@ -1,0 +1,481 @@
+{
+  "resourceType": "TestScript",
+  "id": "complete-encounter-questionnaire-ts-test",
+  "url": "https://beda.software/TestScript/vitals",
+  "name": "complete-encounter-questionnaire-sc-test",
+  "title": "Complete an encounter",
+  "description": "Completes a consultation with the Beda EMR encounter completion questionnaire\n(`Questionnaire/complete-encounter`): SDC `$populate` fills the form from the encounter, and SDC\n`$extract` bills it.\n\n- **Server prerequisites:** the seed `Questionnaire/complete-encounter`, the `consultation`\n  HealthcareService and ChargeItemDefinition, and `PractitionerRole/practitioner1`.\n- **Data:** creates `Patient/patient3`, `Appointment/appointment1` and an in-progress\n  `Encounter/encounter1`. Teardown deletes them, along with the Invoice and ChargeItem the extract creates.",
+  "status": "draft",
+  "date": "2023-03-21",
+  "publisher": "Beda Software",
+  "contact": [
+    {
+      "name": "Support",
+      "telecom": [
+        {
+          "system": "email",
+          "value": "ilya@beda.software",
+          "use": "work"
+        },
+        {
+          "system": "email",
+          "value": "pavel.r@beda.software",
+          "use": "work"
+        }
+      ]
+    }
+  ],
+  "contained": [
+    {
+      "resourceType": "Parameters",
+      "id": "populate-launch-context-params",
+      "parameter": [
+        {
+          "name": "CurrentEncounter",
+          "resource": {
+            "appointment": [
+              {
+                "reference": "Appointment/appointment1"
+              }
+            ],
+            "participant": [
+              {
+                "individual": {
+                  "display": "Basic-1 Practitioner - Endocrinology",
+                  "reference": "PractitionerRole/practitioner1"
+                }
+              }
+            ],
+            "resourceType": "Encounter",
+            "status": "in-progress",
+            "id": "encounter1",
+            "class": {
+              "code": "consultation",
+              "system": "http://beda.software/custom-healthcare-service-list",
+              "display": "The first appointment"
+            },
+            "period": {
+              "start": "2023-10-14T06:00:00Z"
+            },
+            "subject": {
+              "display": "First Patient",
+              "reference": "Patient/patient3"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "fixture": [
+    {
+      "id": "patient",
+      "resource": {
+        "reference": "file://patient1.yaml"
+      },
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "appointment",
+      "resource": {
+        "reference": "file://appointment.yaml"
+      },
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "launched-encounter",
+      "resource": {
+        "reference": "file://encounter.yaml"
+      },
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "complete-encounter-questionnaire-response",
+      "resource": {
+        "reference": "file://complete-encounter-questionnaire-response.yaml"
+      },
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "complete-encounter-extract-parameters-fixture",
+      "resource": {
+        "reference": "file://complete-encounter-extract-request-body.yaml"
+      },
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "complete-encounter-questionnaire-fixture",
+      "resource": {
+        "reference": "Questionnaire/complete-encounter"
+      },
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "launch-context-params",
+      "resource": {
+        "reference": "#Parameters/populate-launch-context-params"
+      },
+      "autocreate": false,
+      "autodelete": false
+    }
+  ],
+  "variable": [
+    {
+      "name": "launched-encounter-id",
+      "sourceId": "launched-encounter",
+      "expression": "Encounter.id"
+    },
+    {
+      "name": "launched-encounter-class-code",
+      "sourceId": "launched-encounter",
+      "expression": "Encounter.class.code"
+    },
+    {
+      "name": "launched-encounter-class-display",
+      "sourceId": "launched-encounter",
+      "expression": "Encounter.class.display"
+    }
+  ],
+  "setup": {
+    "action": [
+      {
+        "operation": {
+          "type": {
+            "code": "create",
+            "system": "http://terminology.hl7.org/CodeSystem/testscript-operation-codes"
+          },
+          "resource": "Patient",
+          "sourceId": "patient",
+          "responseId": "create-test-patient",
+          "description": "Create fixture resource",
+          "encodeRequestUrl": false
+        }
+      },
+      {
+        "assert": {
+          "description": "Confirm that the returned HTTP status is 201(created).",
+          "direction": "response",
+          "response": "created",
+          "warningOnly": false
+        }
+      },
+      {
+        "operation": {
+          "type": {
+            "code": "create",
+            "system": "http://terminology.hl7.org/CodeSystem/testscript-operation-codes"
+          },
+          "resource": "Appointment",
+          "sourceId": "appointment",
+          "responseId": "create-test-appointment",
+          "description": "Create fixture resource",
+          "encodeRequestUrl": false
+        }
+      },
+      {
+        "assert": {
+          "description": "Confirm that the returned HTTP status is 201(created).",
+          "direction": "response",
+          "response": "created",
+          "warningOnly": false
+        }
+      },
+      {
+        "operation": {
+          "type": {
+            "code": "create",
+            "system": "http://terminology.hl7.org/CodeSystem/testscript-operation-codes"
+          },
+          "resource": "Encounter",
+          "sourceId": "launched-encounter",
+          "responseId": "create-test-encounter",
+          "description": "Create fixture resource",
+          "encodeRequestUrl": false
+        }
+      },
+      {
+        "assert": {
+          "description": "Confirm that the returned HTTP status is 201(created).",
+          "direction": "response",
+          "response": "created",
+          "warningOnly": false
+        }
+      }
+    ]
+  },
+  "test": [
+    {
+      "name": "Populate the encounter completion form",
+      "description": "SDC `$populate` with the encounter as launch context. The QuestionnaireResponse carries the\nencounter id (`encounter1`) and the encounter's healthcare service (code `consultation`, name\n\"The first appointment\").",
+      "action": [
+        {
+          "operation": {
+            "type": {
+              "code": "populate",
+              "system": "http://terminology.hl7.org/CodeSystem/testscript-operation-codes"
+            },
+            "resource": "Questionnaire",
+            "description": "Questionnaire population",
+            "accept": "json",
+            "method": "post",
+            "targetId": "complete-encounter-questionnaire-fixture",
+            "sourceId": "launch-context-params",
+            "encodeRequestUrl": false
+          }
+        },
+        {
+          "assert": {
+            "description": "Check is equal",
+            "resource": "QuestionnaireResponse",
+            "value": "encounter1",
+            "operator": "equals",
+            "warningOnly": false,
+            "expression": "QuestionnaireResponse.repeat(item).where(linkId='current-encounter-id').answer.value.ofType(string)"
+          }
+        },
+        {
+          "assert": {
+            "description": "Check is equal",
+            "resource": "QuestionnaireResponse",
+            "value": "consultation",
+            "operator": "equals",
+            "warningOnly": false,
+            "expression": "QuestionnaireResponse.repeat(item).where(linkId='healthcare-service-code').answer.value.ofType(string)"
+          }
+        },
+        {
+          "assert": {
+            "description": "Check is equal",
+            "resource": "QuestionnaireResponse",
+            "value": "The first appointment",
+            "operator": "equals",
+            "warningOnly": false,
+            "expression": "QuestionnaireResponse.repeat(item).where(linkId='healthcare-service-name').answer.value.ofType(string)"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Extract the invoice and charge item",
+      "description": "SDC `$extract` of the completed form (HTTP 200), then:\n\n- **Invoice:** exactly one for `Patient/patient3`, with participant `PractitionerRole/practitioner1` and\n  one line item priced at base 50 and tax 10.\n- **ChargeItem:** exactly one for `Patient/patient3`, coded with the encounter's class (`consultation`,\n  \"The first appointment\").",
+      "action": [
+        {
+          "operation": {
+            "type": {
+              "code": "extract",
+              "system": "http://terminology.hl7.org/CodeSystem/testscript-operation-codes"
+            },
+            "resource": "Questionnaire",
+            "description": "Questionnaire data extract",
+            "accept": "json",
+            "method": "post",
+            "targetId": "complete-encounter-questionnaire-fixture",
+            "sourceId": "complete-encounter-extract-parameters-fixture",
+            "encodeRequestUrl": false
+          }
+        },
+        {
+          "assert": {
+            "description": "Confirm that the extract returned HTTP status is 200(OK).",
+            "direction": "response",
+            "response": "okay",
+            "warningOnly": false
+          }
+        },
+        {
+          "operation": {
+            "description": "Search FHIR resources",
+            "type": {
+              "code": "search",
+              "system": "http://hl7.org/fhir/uv/sdc/OperationDefinition/QuestionnaireResponse-extract"
+            },
+            "resource": "Invoice",
+            "encodeRequestUrl": false,
+            "params": "?subject=patient3"
+          }
+        },
+        {
+          "assert": {
+            "description": "Check is equal",
+            "resource": "Bundle",
+            "value": "1",
+            "operator": "equals",
+            "warningOnly": false,
+            "expression": "Bundle.total.toString()"
+          }
+        },
+        {
+          "assert": {
+            "description": "Check is equal",
+            "resource": "Bundle",
+            "value": "Patient/patient3",
+            "operator": "equals",
+            "warningOnly": false,
+            "expression": "Bundle.entry.resource.subject.reference"
+          }
+        },
+        {
+          "assert": {
+            "description": "Check is equal",
+            "resource": "Bundle",
+            "value": "PractitionerRole/practitioner1",
+            "operator": "equals",
+            "warningOnly": false,
+            "expression": "Bundle.entry.resource.participant.actor.reference"
+          }
+        },
+        {
+          "assert": {
+            "description": "Check is equal",
+            "resource": "Bundle",
+            "value": "1",
+            "operator": "equals",
+            "warningOnly": false,
+            "expression": "Bundle.entry.resource.lineItem.count().toString()"
+          }
+        },
+        {
+          "assert": {
+            "description": "Check is equal",
+            "resource": "Bundle",
+            "value": "50",
+            "operator": "equals",
+            "warningOnly": false,
+            "expression": "Bundle.entry.resource.lineItem.priceComponent.where(type='base').amount.value.toString()"
+          }
+        },
+        {
+          "assert": {
+            "description": "Check is equal",
+            "resource": "Bundle",
+            "value": "10",
+            "operator": "equals",
+            "warningOnly": false,
+            "expression": "Bundle.entry.resource.lineItem.priceComponent.where(type='tax').amount.value.toString()"
+          }
+        },
+        {
+          "operation": {
+            "description": "Search FHIR resources",
+            "type": {
+              "code": "search",
+              "system": "http://hl7.org/fhir/uv/sdc/OperationDefinition/QuestionnaireResponse-extract"
+            },
+            "resource": "ChargeItem",
+            "encodeRequestUrl": false,
+            "params": "?subject=patient3"
+          }
+        },
+        {
+          "assert": {
+            "description": "Check is equal",
+            "resource": "Bundle",
+            "value": "1",
+            "operator": "equals",
+            "warningOnly": false,
+            "expression": "Bundle.total.toString()"
+          }
+        },
+        {
+          "assert": {
+            "description": "Check is equal",
+            "resource": "Bundle",
+            "value": "Patient/patient3",
+            "operator": "equals",
+            "warningOnly": false,
+            "expression": "Bundle.entry.resource.subject.reference"
+          }
+        },
+        {
+          "assert": {
+            "description": "Check is equal",
+            "resource": "Bundle",
+            "value": "${launched-encounter-class-code}",
+            "operator": "equals",
+            "warningOnly": false,
+            "expression": "Bundle.entry.resource.code.coding.code"
+          }
+        },
+        {
+          "assert": {
+            "description": "Check is equal",
+            "resource": "Bundle",
+            "value": "${launched-encounter-class-display}",
+            "operator": "equals",
+            "warningOnly": false,
+            "expression": "Bundle.entry.resource.code.coding.display"
+          }
+        }
+      ]
+    }
+  ],
+  "teardown": {
+    "action": [
+      {
+        "operation": {
+          "type": {
+            "code": "delete",
+            "system": "http://terminology.hl7.org/CodeSystem/testscript-operation-codes"
+          },
+          "resource": "Patient",
+          "description": "Delete test resources",
+          "targetId": "create-test-patient",
+          "encodeRequestUrl": true
+        }
+      },
+      {
+        "operation": {
+          "type": {
+            "code": "delete",
+            "system": "http://terminology.hl7.org/CodeSystem/testscript-operation-codes"
+          },
+          "resource": "Encounter",
+          "description": "Delete test resources",
+          "targetId": "create-test-encounter",
+          "encodeRequestUrl": true
+        }
+      },
+      {
+        "operation": {
+          "type": {
+            "code": "delete",
+            "system": "http://terminology.hl7.org/CodeSystem/testscript-operation-codes"
+          },
+          "resource": "Appointment",
+          "description": "Delete test resources",
+          "targetId": "create-test-appointment",
+          "encodeRequestUrl": true
+        }
+      },
+      {
+        "operation": {
+          "type": {
+            "code": "delete",
+            "system": "http://terminology.hl7.org/CodeSystem/testscript-operation-codes"
+          },
+          "resource": "Invoice",
+          "description": "Delete test resources",
+          "params": "?subject=patient3",
+          "encodeRequestUrl": true
+        }
+      },
+      {
+        "operation": {
+          "type": {
+            "code": "delete",
+            "system": "http://terminology.hl7.org/CodeSystem/testscript-operation-codes"
+          },
+          "resource": "ChargeItem",
+          "description": "Delete test resources",
+          "params": "?subject=patient3",
+          "encodeRequestUrl": true
+        }
+      }
+    ]
+  }
+}

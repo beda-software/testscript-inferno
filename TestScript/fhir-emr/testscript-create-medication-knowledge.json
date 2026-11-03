@@ -1,0 +1,295 @@
+{
+  "resourceType": "TestScript",
+  "id": "medication-knowledge-create-questionnaire-ts-test",
+  "url": "https://beda.software/TestScript/medication-knowledge-create-questionnaire-ts-test",
+  "name": "medication-knowledge-create-questionnaire-ts-test",
+  "title": "Create a medication knowledge entry",
+  "description": "Adds a drug to the formulary with the Beda EMR medication knowledge questionnaire\n(`Questionnaire/medication-knowledge-create`) and SDC `$extract`.\n\n- **Server prerequisites:** the seed `Questionnaire/medication-knowledge-create`.\n- **Data:** the extract creates the `my-test-medication` MedicationKnowledge; teardown deletes it.",
+  "status": "draft",
+  "date": "2023-12-03",
+  "publisher": "Beda Software",
+  "contact": [
+    {
+      "name": "Support",
+      "telecom": [
+        {
+          "system": "email",
+          "value": "ilya@beda.software",
+          "use": "work"
+        },
+        {
+          "system": "email",
+          "value": "pavel.r@beda.software",
+          "use": "work"
+        }
+      ]
+    }
+  ],
+  "fixture": [
+    {
+      "id": "medication-knowledge-create-body",
+      "resource": {
+        "reference": "file://medication-knowledge-create-extract-request-body.yaml"
+      },
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "medication-knowledge-create-questionnaire",
+      "resource": {
+        "reference": "Questionnaire/medication-knowledge-create"
+      },
+      "autocreate": false,
+      "autodelete": false
+    }
+  ],
+  "test": [
+    {
+      "name": "Create the my-test-medication entry",
+      "description": "SDC `$extract` of a filled form, then exactly one MedicationKnowledge with code `my-test-medication`,\nchecking its display, packaging (a box of 25 tablets), dose form, cost (5) and ingredient (azilsartan,\ncode 1091643, 10 mg per tablet).",
+      "action": [
+        {
+          "operation": {
+            "type": {
+              "code": "extract",
+              "system": "http://terminology.hl7.org/CodeSystem/testscript-operation-codes"
+            },
+            "resource": "Questionnaire",
+            "description": "Questionnaire data extract",
+            "accept": "json",
+            "method": "post",
+            "targetId": "medication-knowledge-create-questionnaire",
+            "sourceId": "medication-knowledge-create-body",
+            "encodeRequestUrl": false
+          }
+        },
+        {
+          "assert": {
+            "description": "Confirm that the extract returned HTTP status is 200(OK).",
+            "direction": "response",
+            "response": "okay",
+            "warningOnly": false
+          }
+        },
+        {
+          "operation": {
+            "description": "Search FHIR resources",
+            "type": {
+              "code": "search",
+              "system": "http://hl7.org/fhir/uv/sdc/OperationDefinition/QuestionnaireResponse-extract"
+            },
+            "resource": "MedicationKnowledge",
+            "encodeRequestUrl": false,
+            "params": "?code=my-test-medication"
+          }
+        },
+        {
+          "assert": {
+            "description": "Check is equal",
+            "resource": "Bundle",
+            "value": "1",
+            "operator": "equals",
+            "warningOnly": false,
+            "expression": "Bundle.total.toString()"
+          }
+        },
+        {
+          "assert": {
+            "description": "Check is equal",
+            "resource": "Bundle",
+            "value": "My test medication",
+            "operator": "equals",
+            "warningOnly": false,
+            "expression": "Bundle.entry.resource.code.coding.first().display"
+          }
+        },
+        {
+          "assert": {
+            "description": "Check is equal",
+            "resource": "Bundle",
+            "value": "my-test-medication",
+            "operator": "equals",
+            "warningOnly": false,
+            "expression": "Bundle.entry.resource.code.coding.first().code"
+          }
+        },
+        {
+          "assert": {
+            "description": "Check is equal",
+            "resource": "Bundle",
+            "value": "Box",
+            "operator": "equals",
+            "warningOnly": false,
+            "expression": "Bundle.entry.resource.packaging.type.coding.first().display"
+          }
+        },
+        {
+          "assert": {
+            "description": "Check is equal",
+            "resource": "Bundle",
+            "value": "box",
+            "operator": "equals",
+            "warningOnly": false,
+            "expression": "Bundle.entry.resource.packaging.type.coding.first().code"
+          }
+        },
+        {
+          "assert": {
+            "description": "Check is equal",
+            "resource": "Bundle",
+            "value": "385055001",
+            "operator": "equals",
+            "warningOnly": false,
+            "expression": "Bundle.entry.resource.amount.code"
+          }
+        },
+        {
+          "assert": {
+            "description": "Check is equal",
+            "resource": "Bundle",
+            "value": "Tablet",
+            "operator": "equals",
+            "warningOnly": false,
+            "expression": "Bundle.entry.resource.amount.unit"
+          }
+        },
+        {
+          "assert": {
+            "description": "Check is equal",
+            "resource": "Bundle",
+            "value": "25",
+            "operator": "equals",
+            "warningOnly": false,
+            "expression": "Bundle.entry.resource.amount.value.toString()"
+          }
+        },
+        {
+          "assert": {
+            "description": "Check is equal",
+            "resource": "Bundle",
+            "value": "Tablet",
+            "operator": "equals",
+            "warningOnly": false,
+            "expression": "Bundle.entry.resource.doseForm.coding.first().display"
+          }
+        },
+        {
+          "assert": {
+            "description": "Check is equal",
+            "resource": "Bundle",
+            "value": "385055001",
+            "operator": "equals",
+            "warningOnly": false,
+            "expression": "Bundle.entry.resource.doseForm.coding.first().code"
+          }
+        },
+        {
+          "assert": {
+            "description": "Check is equal",
+            "resource": "Bundle",
+            "value": "5",
+            "operator": "equals",
+            "warningOnly": false,
+            "expression": "Bundle.entry.resource.cost.first().cost.value.toString()"
+          }
+        },
+        {
+          "assert": {
+            "description": "Check is equal",
+            "resource": "Bundle",
+            "value": "1091643",
+            "operator": "equals",
+            "warningOnly": false,
+            "expression": "Bundle.entry.resource.ingredient.first().item.ofType(CodeableConcept).coding.first().code"
+          }
+        },
+        {
+          "assert": {
+            "description": "Check is equal",
+            "resource": "Bundle",
+            "value": "azilsartan",
+            "operator": "equals",
+            "warningOnly": false,
+            "expression": "Bundle.entry.resource.ingredient.first().item.ofType(CodeableConcept).coding.first().display"
+          }
+        },
+        {
+          "assert": {
+            "description": "Check is equal",
+            "resource": "Bundle",
+            "value": "mg",
+            "operator": "equals",
+            "warningOnly": false,
+            "expression": "Bundle.entry.resource.ingredient.first().strength.numerator.code"
+          }
+        },
+        {
+          "assert": {
+            "description": "Check is equal",
+            "resource": "Bundle",
+            "value": "Milligram",
+            "operator": "equals",
+            "warningOnly": false,
+            "expression": "Bundle.entry.resource.ingredient.first().strength.numerator.unit"
+          }
+        },
+        {
+          "assert": {
+            "description": "Check is equal",
+            "resource": "Bundle",
+            "value": "10",
+            "operator": "equals",
+            "warningOnly": false,
+            "expression": "Bundle.entry.resource.ingredient.first().strength.numerator.value.toString()"
+          }
+        },
+        {
+          "assert": {
+            "description": "Check is equal",
+            "resource": "Bundle",
+            "value": "tablet",
+            "operator": "equals",
+            "warningOnly": false,
+            "expression": "Bundle.entry.resource.ingredient.first().strength.denominator.code"
+          }
+        },
+        {
+          "assert": {
+            "description": "Check is equal",
+            "resource": "Bundle",
+            "value": "Tablet",
+            "operator": "equals",
+            "warningOnly": false,
+            "expression": "Bundle.entry.resource.ingredient.first().strength.denominator.unit"
+          }
+        },
+        {
+          "assert": {
+            "description": "Check is equal",
+            "resource": "Bundle",
+            "value": "1",
+            "operator": "equals",
+            "warningOnly": false,
+            "expression": "Bundle.entry.resource.ingredient.first().strength.denominator.value.toString()"
+          }
+        }
+      ]
+    }
+  ],
+  "teardown": {
+    "action": [
+      {
+        "operation": {
+          "type": {
+            "code": "delete",
+            "system": "http://terminology.hl7.org/CodeSystem/testscript-operation-codes"
+          },
+          "resource": "MedicationKnowledge",
+          "description": "Delete test resources",
+          "params": "?code=my-test-medication",
+          "encodeRequestUrl": true
+        }
+      }
+    ]
+  }
+}

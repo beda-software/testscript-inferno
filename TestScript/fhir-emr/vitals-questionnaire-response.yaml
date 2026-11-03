@@ -1,0 +1,85 @@
+authored: '2023-10-17T08:23:40Z'
+id: c42c70dd-7536-49bd-98d8-824bad55233d
+item:
+- answer:
+  - valueString: test-patient
+  linkId: patientId
+- answer:
+  - valueString: First Patient
+  linkId: patientName
+- linkId: vitals-data
+  item:
+  - linkId: height
+    answer:
+    - valueQuantity:
+        value: 1
+        unit: cm
+        system: http://unitsofmeasure.org
+        code: cm
+  - linkId: weight
+    answer:
+    - valueQuantity:
+        value: 2
+        unit: kg
+        system: http://unitsofmeasure.org
+        code: kg
+  - linkId: temperature
+    answer:
+    - valueQuantity:
+        value: 3
+        unit: "°C"
+        system: http://unitsofmeasure.org
+        code: Cel
+  - linkId: oxygen-saturation
+    answer:
+    - valueQuantity:
+        value: 4
+        unit: "%"
+        system: http://unitsofmeasure.org
+        code: "%"
+  - linkId: pulse-rate
+    answer:
+    - valueQuantity:
+        value: 5
+        unit: bpm
+        system: http://unitsofmeasure.org
+        code: bpm
+  - linkId: respiratory-rate
+    answer:
+    - valueQuantity:
+        value: 6
+        unit: bpm
+        system: http://unitsofmeasure.org
+        code: bpm
+  - linkId: blood-pressure
+    item:
+    - linkId: blood-pressure-systolic-diastolic
+      item:
+      - linkId: blood-pressure-systolic
+        answer:
+        - valueQuantity:
+            value: 7
+            unit: mmHg
+            system: http://unitsofmeasure.org
+            code: mmHg
+      - linkId: blood-pressure-diastolic
+        answer:
+        - valueQuantity:
+            value: 8
+            unit: mmHg
+            system: http://unitsofmeasure.org
+            code: mmHg
+- answer:
+  - valueDecimal: 20000
+  linkId: bmi
+meta:
+  extension:
+  - url: ex:createdAt
+    valueInstant: '2023-10-17T08:23:40.247450Z'
+  lastUpdated: '2023-10-17T08:23:40.247450Z'
+  versionId: '1524'
+questionnaire: vitals
+resourceType: QuestionnaireResponse
+status: completed
+subject:
+  reference: Patient/test-patient

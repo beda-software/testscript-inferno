@@ -1,0 +1,14 @@
+# Development: docker compose merges this file into docker-compose.yml (so ./run.sh uses it).
+# The kit's code is mounted instead of the copy in the image, and Inferno restarts whenever the kit,
+# a TestScript or a fixture changes. What is watched is set in .rerun. Polling, as file events from
+# the host do not always reach the container. To run the image as built, without reloading:
+#   docker compose -f docker-compose.yml up
+services:
+  inferno:
+    volumes:
+      - .:/opt/inferno
+    command: bundle exec rerun --background --force-polling -- bundle exec puma
+  worker:
+    volumes:
+      - .:/opt/inferno
+    command: bundle exec rerun --background --force-polling -- bundle exec sidekiq -r ./worker.rb

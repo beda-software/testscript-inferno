@@ -1,0 +1,264 @@
+{
+  "resourceType": "TestScript",
+  "id": "cancel-confirm-medication-request",
+  "url": "https://beda.software/TestScript/cancel-confirm-medication-request",
+  "name": "cancel-confirm-medication-request",
+  "title": "Cancel and confirm a medication request",
+  "description": "Cancels a prescription and then dispenses it, using the Beda EMR medication request questionnaires\nwith SDC `$extract`.\n\n- **Server prerequisites:** the seed Questionnaires `medication-request-cancel` and\n  `medication-request-confirm`, and the seed `Patient/patient2` and `Practitioner/practitioner2`.\n- **Data:** puts the seed `MedicationRequest/medication-request-3` (active) and `Medication/medication-3`\n  (Edarbi 80mg, inactive) back in their seed state first. They are not deleted afterwards, and the\n  request is left completed.",
+  "status": "draft",
+  "date": "2023-12-03",
+  "publisher": "Beda Software",
+  "contact": [
+    {
+      "name": "Support",
+      "telecom": [
+        {
+          "system": "email",
+          "value": "ilya@beda.software",
+          "use": "work"
+        },
+        {
+          "system": "email",
+          "value": "pavel.r@beda.software",
+          "use": "work"
+        }
+      ]
+    }
+  ],
+  "fixture": [
+    {
+      "id": "medication-request-cancel-request-body",
+      "resource": {
+        "reference": "file://medication-request-cancel-request-body.yaml"
+      },
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "medication-request-confirm-request-body",
+      "resource": {
+        "reference": "file://medication-request-confirm-request-body.yaml"
+      },
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "medication-request-cancel-questionnaire",
+      "resource": {
+        "reference": "Questionnaire/medication-request-cancel"
+      },
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "medication-request-confirm-questionnaire",
+      "resource": {
+        "reference": "Questionnaire/medication-request-confirm"
+      },
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "medication-request-3",
+      "resource": {
+        "reference": "file://medication-request-3.yaml"
+      },
+      "autocreate": true,
+      "autodelete": false
+    },
+    {
+      "id": "medication-3",
+      "resource": {
+        "reference": "file://medication-3.yaml"
+      },
+      "autocreate": true,
+      "autodelete": false
+    }
+  ],
+  "test": [
+    {
+      "name": "Cancel then confirm medication-request-3",
+      "description": "1. Before: exactly one active Edarbi 80mg 25 tablets Medication, and `medication-request-3` is active.\n2. `$extract` of `Questionnaire/medication-request-cancel`: the request becomes **cancelled**, and two\n   Edarbi 80mg Medications are active.\n3. `$extract` of `Questionnaire/medication-request-confirm`: the request becomes **completed**, and one\n   Edarbi 80mg Medication is active again.",
+      "action": [
+        {
+          "operation": {
+            "description": "Search FHIR resources",
+            "type": {
+              "code": "search",
+              "system": "http://hl7.org/fhir/uv/sdc/OperationDefinition/QuestionnaireResponse-extract"
+            },
+            "resource": "Medication",
+            "encodeRequestUrl": false,
+            "params": "?code=edarbi-80mg-25-tablets&status=active"
+          }
+        },
+        {
+          "assert": {
+            "description": "Check is equal",
+            "resource": "Bundle",
+            "value": "1",
+            "operator": "equals",
+            "warningOnly": false,
+            "expression": "Bundle.total.toString()"
+          }
+        },
+        {
+          "operation": {
+            "description": "Search FHIR resources",
+            "type": {
+              "code": "search",
+              "system": "http://hl7.org/fhir/uv/sdc/OperationDefinition/QuestionnaireResponse-extract"
+            },
+            "resource": "MedicationRequest",
+            "encodeRequestUrl": false,
+            "params": "?_id=medication-request-3"
+          }
+        },
+        {
+          "assert": {
+            "description": "Check is equal",
+            "resource": "Bundle",
+            "value": "active",
+            "operator": "equals",
+            "warningOnly": false,
+            "expression": "Bundle.entry.resource.status"
+          }
+        },
+        {
+          "operation": {
+            "type": {
+              "code": "extract",
+              "system": "http://terminology.hl7.org/CodeSystem/testscript-operation-codes"
+            },
+            "resource": "Questionnaire",
+            "description": "Questionnaire data extract",
+            "accept": "json",
+            "method": "post",
+            "targetId": "medication-request-cancel-questionnaire",
+            "sourceId": "medication-request-cancel-request-body",
+            "encodeRequestUrl": false
+          }
+        },
+        {
+          "assert": {
+            "description": "Confirm that the extract returned HTTP status is 200(OK).",
+            "direction": "response",
+            "response": "okay",
+            "warningOnly": false
+          }
+        },
+        {
+          "operation": {
+            "description": "Search FHIR resources",
+            "type": {
+              "code": "search",
+              "system": "http://hl7.org/fhir/uv/sdc/OperationDefinition/QuestionnaireResponse-extract"
+            },
+            "resource": "Medication",
+            "encodeRequestUrl": false,
+            "params": "?code=edarbi-80mg-25-tablets&status=active"
+          }
+        },
+        {
+          "assert": {
+            "description": "Check is equal",
+            "resource": "Bundle",
+            "value": "2",
+            "operator": "equals",
+            "warningOnly": false,
+            "expression": "Bundle.total.toString()"
+          }
+        },
+        {
+          "operation": {
+            "description": "Search FHIR resources",
+            "type": {
+              "code": "search",
+              "system": "http://hl7.org/fhir/uv/sdc/OperationDefinition/QuestionnaireResponse-extract"
+            },
+            "resource": "MedicationRequest",
+            "encodeRequestUrl": false,
+            "params": "?_id=medication-request-3"
+          }
+        },
+        {
+          "assert": {
+            "description": "Check is equal",
+            "resource": "Bundle",
+            "value": "cancelled",
+            "operator": "equals",
+            "warningOnly": false,
+            "expression": "Bundle.entry.resource.status"
+          }
+        },
+        {
+          "operation": {
+            "type": {
+              "code": "extract",
+              "system": "http://terminology.hl7.org/CodeSystem/testscript-operation-codes"
+            },
+            "resource": "Questionnaire",
+            "description": "Questionnaire data extract",
+            "accept": "json",
+            "method": "post",
+            "targetId": "medication-request-confirm-questionnaire",
+            "sourceId": "medication-request-confirm-request-body",
+            "encodeRequestUrl": false
+          }
+        },
+        {
+          "assert": {
+            "description": "Confirm that the extract returned HTTP status is 200(OK).",
+            "direction": "response",
+            "response": "okay",
+            "warningOnly": false
+          }
+        },
+        {
+          "operation": {
+            "description": "Search FHIR resources",
+            "type": {
+              "code": "search",
+              "system": "http://hl7.org/fhir/uv/sdc/OperationDefinition/QuestionnaireResponse-extract"
+            },
+            "resource": "Medication",
+            "encodeRequestUrl": false,
+            "params": "?code=edarbi-80mg-25-tablets&status=active"
+          }
+        },
+        {
+          "assert": {
+            "description": "Check is equal",
+            "resource": "Bundle",
+            "value": "1",
+            "operator": "equals",
+            "warningOnly": false,
+            "expression": "Bundle.total.toString()"
+          }
+        },
+        {
+          "operation": {
+            "description": "Search FHIR resources",
+            "type": {
+              "code": "search",
+              "system": "http://hl7.org/fhir/uv/sdc/OperationDefinition/QuestionnaireResponse-extract"
+            },
+            "resource": "MedicationRequest",
+            "encodeRequestUrl": false,
+            "params": "?_id=medication-request-3"
+          }
+        },
+        {
+          "assert": {
+            "description": "Check is equal",
+            "resource": "Bundle",
+            "value": "completed",
+            "operator": "equals",
+            "warningOnly": false,
+            "expression": "Bundle.entry.resource.status"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,155 @@
+{
+  "resourceType": "TestScript",
+  "id": "medication-batch-create-questionnaire-ts-test",
+  "url": "https://beda.software/TestScript/medication-batch-create-questionnaire-ts-test",
+  "name": "medication-batch-create-questionnaire-ts-test",
+  "title": "Create a medication batch",
+  "description": "Receives stock with the Beda EMR medication batch questionnaire\n(`Questionnaire/medication-batch-create`) and SDC `$extract`.\n\n- **Server prerequisites:** the seed `Questionnaire/medication-batch-create`.\n- **Data:** the extract creates Medication batches of Edarbi 20mg 25 tablets; teardown deletes every\n  Medication with that code.",
+  "status": "draft",
+  "date": "2023-12-03",
+  "publisher": "Beda Software",
+  "contact": [
+    {
+      "name": "Support",
+      "telecom": [
+        {
+          "system": "email",
+          "value": "ilya@beda.software",
+          "use": "work"
+        },
+        {
+          "system": "email",
+          "value": "pavel.r@beda.software",
+          "use": "work"
+        }
+      ]
+    }
+  ],
+  "fixture": [
+    {
+      "id": "medication-batch-create-body",
+      "resource": {
+        "reference": "file://medication-batch-create-extract-request-body.yaml"
+      },
+      "autocreate": false,
+      "autodelete": false
+    },
+    {
+      "id": "medication-batch-create-questionnaire",
+      "resource": {
+        "reference": "Questionnaire/medication-batch-create"
+      },
+      "autocreate": false,
+      "autodelete": false
+    }
+  ],
+  "test": [
+    {
+      "name": "Create Edarbi 20mg batches",
+      "description": "SDC `$extract` of a filled form, then exactly two Medications with code `edarbi-20mg-25tablets`\n(\"Edarbi 20mg 25 tablets\"), lot number 1, expiring 2025-01-01.",
+      "action": [
+        {
+          "operation": {
+            "type": {
+              "code": "extract",
+              "system": "http://terminology.hl7.org/CodeSystem/testscript-operation-codes"
+            },
+            "resource": "Questionnaire",
+            "description": "Questionnaire data extract",
+            "accept": "json",
+            "method": "post",
+            "targetId": "medication-batch-create-questionnaire",
+            "sourceId": "medication-batch-create-body",
+            "encodeRequestUrl": false
+          }
+        },
+        {
+          "assert": {
+            "description": "Confirm that the extract returned HTTP status is 200(OK).",
+            "direction": "response",
+            "response": "okay",
+            "warningOnly": false
+          }
+        },
+        {
+          "operation": {
+            "description": "Search FHIR resources",
+            "type": {
+              "code": "search",
+              "system": "http://hl7.org/fhir/uv/sdc/OperationDefinition/QuestionnaireResponse-extract"
+            },
+            "resource": "Medication",
+            "encodeRequestUrl": false,
+            "params": "?code=edarbi-20mg-25tablets"
+          }
+        },
+        {
+          "assert": {
+            "description": "Check is equal",
+            "resource": "Bundle",
+            "value": "2",
+            "operator": "equals",
+            "warningOnly": false,
+            "expression": "Bundle.total.toString()"
+          }
+        },
+        {
+          "assert": {
+            "description": "Check is equal",
+            "resource": "Bundle",
+            "value": "Edarbi 20mg 25 tablets",
+            "operator": "equals",
+            "warningOnly": false,
+            "expression": "Bundle.entry.resource.code.coding.first().display"
+          }
+        },
+        {
+          "assert": {
+            "description": "Check is equal",
+            "resource": "Bundle",
+            "value": "edarbi-20mg-25tablets",
+            "operator": "equals",
+            "warningOnly": false,
+            "expression": "Bundle.entry.resource.code.coding.first().code"
+          }
+        },
+        {
+          "assert": {
+            "description": "Check is equal",
+            "resource": "Bundle",
+            "value": "1",
+            "operator": "equals",
+            "warningOnly": false,
+            "expression": "Bundle.entry.resource.batch.lotNumber"
+          }
+        },
+        {
+          "assert": {
+            "description": "Check is equal",
+            "resource": "Bundle",
+            "value": "2025-01-01",
+            "operator": "equals",
+            "warningOnly": false,
+            "expression": "Bundle.entry.resource.batch.expirationDate"
+          }
+        }
+      ]
+    }
+  ],
+  "teardown": {
+    "action": [
+      {
+        "operation": {
+          "type": {
+            "code": "delete",
+            "system": "http://terminology.hl7.org/CodeSystem/testscript-operation-codes"
+          },
+          "resource": "Medication",
+          "description": "Delete test resources",
+          "params": "?code=edarbi-20mg-25tablets",
+          "encodeRequestUrl": true
+        }
+      }
+    ]
+  }
+}

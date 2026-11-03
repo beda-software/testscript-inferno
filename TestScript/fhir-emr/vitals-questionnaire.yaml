@@ -1,0 +1,174 @@
+description: Records routine vital signs including blood pressure, heart rate, respiratory
+  rate, temperature, and oxygen saturation.
+subjectType:
+- Encounter
+- Patient
+name: vitals
+item:
+- text: PatientId
+  type: string
+  linkId: patientId
+  extension:
+  - url: http://hl7.org/fhir/StructureDefinition/questionnaire-hidden
+    valueBoolean: true
+  - url: http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression
+    valueExpression:
+      language: text/fhirpath
+      expression: "%Patient.id"
+- text: PatientName
+  type: string
+  linkId: patientName
+  extension:
+  - url: http://hl7.org/fhir/StructureDefinition/questionnaire-hidden
+    valueBoolean: true
+  - url: http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression
+    valueExpression:
+      language: text/fhirpath
+      expression: "%Patient.name.first().given.first() + ' ' + %Patient.name.first().family"
+- item:
+  - text: Height
+    type: quantity
+    linkId: height
+    extension:
+    - url: http://hl7.org/fhir/StructureDefinition/questionnaire-unitOption
+      valueCoding:
+        code: cm
+        system: http://unitsofmeasure.org
+        display: cm
+  - text: Weight
+    type: quantity
+    linkId: weight
+    extension:
+    - url: http://hl7.org/fhir/StructureDefinition/questionnaire-unitOption
+      valueCoding:
+        code: kg
+        system: http://unitsofmeasure.org
+        display: kg
+  - text: Temperature
+    type: quantity
+    linkId: temperature
+    extension:
+    - url: http://hl7.org/fhir/StructureDefinition/questionnaire-unitOption
+      valueCoding:
+        code: Cel
+        system: http://unitsofmeasure.org
+        display: "°C"
+  - text: Oxygen saturation
+    type: quantity
+    linkId: oxygen-saturation
+    extension:
+    - url: http://hl7.org/fhir/StructureDefinition/questionnaire-unitOption
+      valueCoding:
+        code: "%"
+        system: http://unitsofmeasure.org
+        display: "%"
+  - text: Pulse rate
+    type: quantity
+    linkId: pulse-rate
+    extension:
+    - url: http://hl7.org/fhir/StructureDefinition/questionnaire-unitOption
+      valueCoding:
+        code: bpm
+        system: http://unitsofmeasure.org
+        display: bpm
+  - text: Respiratory Rate
+    type: quantity
+    linkId: respiratory-rate
+    extension:
+    - url: http://hl7.org/fhir/StructureDefinition/questionnaire-unitOption
+      valueCoding:
+        code: bpm
+        system: http://unitsofmeasure.org
+        display: bpm
+  - item:
+    - item:
+      - text: BP systolic
+        type: quantity
+        linkId: blood-pressure-systolic
+        extension:
+        - url: http://hl7.org/fhir/StructureDefinition/questionnaire-unitOption
+          valueCoding:
+            code: mmHg
+            system: http://unitsofmeasure.org
+            display: mmHg
+      - text: BP diastolic
+        type: quantity
+        linkId: blood-pressure-diastolic
+        extension:
+        - url: http://hl7.org/fhir/StructureDefinition/questionnaire-unitOption
+          valueCoding:
+            code: mmHg
+            system: http://unitsofmeasure.org
+            display: mmHg
+      type: group
+      linkId: blood-pressure-systolic-diastolic
+      extension:
+      - url: http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl
+        valueCodeableConcept:
+          coding:
+          - code: inline-choice
+    type: group
+    linkId: blood-pressure
+  type: group
+  linkId: vitals-data
+  extension:
+  - url: http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl
+    valueCodeableConcept:
+      coding:
+      - code: group-voice
+- text: BMI
+  type: decimal
+  linkId: bmi
+  readOnly: true
+  required: true
+  extension:
+  - url: http://hl7.org/fhir/StructureDefinition/questionnaire-unit
+    valueCoding:
+      code: kg/m2
+      system: http://unitsofmeasure.org
+      display: kg/m2
+  - url: http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression
+    valueExpression:
+      language: text/fhirpath
+      expression: |-
+        (
+          %QuestionnaireResponse.repeat(item).where(linkId='weight').answer.valueQuantity.value.toDecimal()
+          /
+          (
+            (%QuestionnaireResponse.repeat(item).where(linkId='height').answer.valueQuantity.value.toDecimal() / 100)
+            *
+            (%QuestionnaireResponse.repeat(item).where(linkId='height').answer.valueQuantity.value.toDecimal() / 100)
+          )
+        ).round(2)
+useContext:
+- code:
+    code: questionnaire-type
+    system: https://beda.software/FHIR/CodeSystem/questionnaire-type
+  valueCodeableConcept:
+    coding:
+    - code: form-library
+- code:
+    code: category
+    system: https://beda.software/FHIR/CodeSystem/questionnaire-category
+  valueCodeableConcept:
+    coding:
+    - code: paediatrics
+      system: https://beda.software/FHIR/CodeSystem/questionnaire-category
+    - code: common
+      system: https://beda.software/FHIR/CodeSystem/questionnaire-category
+resourceType: Questionnaire
+title: Vitals
+extension:
+- url: http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext
+  extension:
+  - url: name
+    valueCoding:
+      code: Patient
+  - url: type
+    valueCode: Patient
+- url: https://emr-core.beda.software/StructureDefinition/questionnaire-mapper
+  valueReference:
+    reference: Mapping/vitals
+status: active
+id: vitals
+url: https://aidbox.emr.beda.software/fhir/Questionnaire/vitals

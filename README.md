@@ -12,6 +12,7 @@ An [Inferno](https://github.com/inferno-community/inferno-core) Test Kit that ru
 | `au_core`                  | AU Core 2.0.0 (validator: `tx.hl7.org.au`)     | 169 / 8                               |
 | `at_core_r4`, `at_core_r5` | AT Core 2.1.0 (R4, R5)                         | 5 / 1 each                            |
 | `ch_elm`                   | CH ELM 1.15.1                                  | 26 / 7                                |
+| `fhir_emr`                 | [Beda EMR](https://github.com/beda-software/fhir-emr) (`81c7e77`), against its Aidbox | 45 / 0                  |
 | `fhir_testing_ig`          | FHIR Testing IG                                | 72 / 9                                |
 | `ie_core`                  | IE Core 0.2.0                                  | 10 / 1                                |
 | `radiation_dose_summary`   | Radiation Dose Summary 1.0.0                   | 21 / 2                                |
@@ -60,8 +61,11 @@ Every `TestScript/<IG>/` directory is an Inferno test suite (a short suite file 
   messages are shown on the test.
 - Other resources in an IG directory (e.g. `au-core-patient-conformant.json`) are fixtures, referenced
   from the scripts by a path from the IG directory, as a `file://` URL or starting with `/`:
-  `file://au-core-patient-conformant.json`, `/server/Patient-example.json`. Only `*.json` files directly
-  in the IG directory are checked for TestScripts, so fixtures can also go in subdirectories. To add a script, drop a TestScript JSON file in its IG directory.
+  `file://au-core-patient-conformant.json`, `/server/Patient-example.json`. Only the `*.json`, `*.yaml` and
+  `*.yml` files directly in the IG directory are checked for TestScripts, so fixtures can also go in
+  subdirectories. To add a script, drop a TestScript JSON or YAML file in its IG directory.
+- A group's id is its TestScript's `id`, or the file name when the script has none or another script
+  of the suite has the same one.
 - `TestScript/<IG>/server/<Type>-<id>.json` hold the resources the upstream scripts expect on the
   server (`Type/id` fixture references, reads of fixed ids) and the resources those reference, taken
   unmodified from the IGs' packages. The scripts were rewired to them, see
@@ -180,6 +184,40 @@ server that starts empty:
 - US Directory Attestation (Postman exports): `{{hostname}}/baseR4/` URLs are relative to the base URL,
   PUTs without a body send the fixture with the same `Type/id`, and fixtures without a resource are
   not autocreated.
+- FHIR EMR: see [The FHIR EMR suite](#the-fhir-emr-suite).
+
+### The FHIR EMR suite
+
+`TestScript/fhir-emr/` holds the TestScripts of [Beda EMR](https://github.com/beda-software/fhir-emr)
+(`resources/tests` at commit `81c7e77`). They test a fhir-emr deployment: its SDC `$populate`/`$extract`
+on Aidbox (`http://localhost:8080/fhir`), and its seed Questionnaires and `Patient/patient1`, which the
+scripts read from the server and which are not fixtures here, as autodelete would remove them.
+
+- The directory is flat, like the other IGs: the scripts and their fixtures sit side by side, the
+  scripts reference fixtures as `file://<name>.yaml`, and a fixture's `!include` resolves next to it.
+  Upstream keeps them in `resources/tests/TestScript/` and `resources/tests/resources/`.
+- The YAML scripts are upstream's. The JSON scripts were converted once from upstream's FSH with
+  [kaitenzushi](https://github.com/beda-software/kaitenzushi), using the RuleSets and aliases of
+  [beda-emr-core-zen](https://github.com/beda-software/beda-emr-core-zen), and are edited as JSON from
+  then on.
+- Upstream, the scripts ran against Aidbox's native API, so they were changed for the FHIR API:
+  expressions on choice types and references (`answer.value.string` → `answer.value.ofType(string)`,
+  `item.CodeableConcept` → `item.ofType(CodeableConcept)`, `subject.id` → `subject.reference`), Aidbox
+  first-class extensions (HealthcareService `duration`, ChargeItemDefinition `healthcareService`) as FHIR
+  extensions in the fixtures and expressions, `medication-request-3.yaml` in FHIR format, and the vitals
+  teardown, which used an AidboxQuery, deletes the observations with a FHIR conditional delete.
+- `medication-3.yaml` and `medication-request-confirm.yaml` are symlinks upstream whose targets moved;
+  they are the seeds they pointed to (`resources/demo-seeds`, `resources/init-seeds` at `81c7e77`).
+- `complete-encounter-questionnaire-response.yaml`: its start date was after its end date (Aidbox rejects
+  the extracted Encounter); it is the encounter's start, as `$populate` gives.
+- The cancel/confirm script cancels and confirms the seed `MedicationRequest/medication-request-3`: it
+  autocreates it and `Medication/medication-3` in their seed state first, so it can run again.
+- Creatinine leaves its extracted Observation on the server upstream; its teardown deletes it.
+- Vitals is updated for the current fhir-emr (`27e1009d`, 2026-10-20), where the vitals Questionnaire
+  nests its items in a `vitals-data` group and asks for quantities (`81c7e77` had decimals):
+  `vitals-questionnaire.yaml` is that Questionnaire as fhir-emr serves it, the QuestionnaireResponse
+  answers with `valueQuantity` in each item's unit, and the script compares the quantities' values. The
+  second blood pressure check, a copy of the systolic one upstream, checks the diastolic value (8462-4).
 
 ## Getting Started
 
@@ -206,6 +244,29 @@ Presets in `config/presets/` are loaded automatically: select them with `--prese
 
 Refer to the Inferno documentation for information about [setting up
 your development environment and running your Test Kit](https://inferno-framework.github.io/docs/getting-started/).
+
+### Reloading on changes
+
+Run Inferno on the host with the background services in Docker, and it restarts whenever the kit,
+a TestScript or a fixture changes:
+
+```sh
+bundle exec inferno services start   # validator, FHIRPath, nginx, redis
+bundle exec inferno start --watch     # http://localhost:4567
+```
+
+`bundle install` installs foreman and rerun, which `inferno start` uses. `.rerun` sets what is
+watched: `lib/`, `TestScript/`, `testscript-eval-ruby/lib/` and `config/`, for `.rb`, `.ru`, `.json`,
+`.yaml`/`.yml`, `.xml`, `.fsh` and `.tgz` files. rerun's defaults skip `.json` and `.yaml`, so
+TestScripts were not reloaded. `data/` is not watched, as Inferno writes its database there.
+
+In Docker (`./run.sh`), `docker-compose.override.yml`, which docker compose merges into
+`docker-compose.yml`, does the same: it mounts the kit into the `inferno` and `worker` containers
+instead of the copy in the image, and runs both under rerun with the same `.rerun`, polling for
+changes, as file events from the host do not always reach the container. A change shows up at
+`http://localhost` a few seconds later. Changes to `Gemfile` or `Gemfile.lock` still need a rebuild
+(`./run.sh`, or `docker compose up -d --build inferno worker`). To run the image as built, without
+reloading: `docker compose -f docker-compose.yml up`.
 
 ### The testscript_eval submodule
 
@@ -235,7 +296,7 @@ before `bundle install`. The CI workflows check out submodules.
 - Against a real server, run every suite and compare with the table in [Suites](#suites):
 
   ```sh
-  for suite in au_core at_core_r4 at_core_r5 ch_elm fhir_testing_ig ie_core \
+  for suite in au_core at_core_r4 at_core_r5 ch_elm fhir_emr fhir_testing_ig ie_core \
                radiation_dose_summary us_directory_attestation; do
     bundle exec inferno execute --suite $suite --preset-id ${suite}_local_aidbox
   done
@@ -268,6 +329,7 @@ reviewed or endorsed this kit, and the scripts are included as test data only.
 | `fhir-testing-ig` | [FHIR Testing IG](https://hl7.org/fhir/uv/testing/0.1.0-snapshot1/) (`hl7.fhir.uv.testing` 0.1.0-snapshot1); `server/` resources from the [FHIR R4 examples](https://hl7.org/fhir/R4/downloads.html) | HL7 International / FHIR Infrastructure | [CC0-1.0](https://creativecommons.org/publicdomain/zero/1.0/) ([FHIR license](https://hl7.org/fhir/R4/license.html)) |
 | `ie-core` | [IE Core](https://hl7-ie.github.io/ie-core/) (`nostalgic-ie.fhir.core` 0.2.0) | Nithin Mohan T K | [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/), see the credit below |
 | `radiation-dose-summary` | [Radiation Dose Summary for Diagnostic Procedures](https://hl7.org/fhir/uv/radiation-dose-summary/) (`hl7.fhir.uv.radiation-dose-summary` 1.0.0) | HL7 International / Imaging Integration | [CC0-1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| `fhir-emr` | [Beda EMR](https://github.com/beda-software/fhir-emr) (`resources/tests` at `81c7e77`); FSH RuleSets from [beda-emr-core-zen](https://github.com/beda-software/beda-emr-core-zen) | Beda Software | [MIT](https://github.com/beda-software/fhir-emr/blob/main/LICENSE) |
 | `us-directory-attestation` | [National Directory of Healthcare Providers & Services – Attestation](https://hl7.org/fhir/us/directory-attestation/2022Sep/) (`hl7.fhir.us.directory-attestation` 1.0.0-ballot) | HL7 Patient Administration Working Group | [CC0-1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
 
 The packages are available from the [FHIR package registry](https://packages.fhir.org/), or from the CI

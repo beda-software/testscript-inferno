@@ -1,0 +1,22 @@
+url: https://emr.beda.software/charge-item/ecg
+meta:
+  profile:
+    - https://beda.software/beda-emr-charge-item-definition
+title: ECG
+status: active
+propertyGroup:
+  - priceComponent:
+      - type: base
+        amount:
+          value: 10
+          currency: USD
+      - type: tax
+        amount:
+          value: 1
+          currency: USD
+extension:
+  - url: http://beda.software/fhir-extensions/charge-item-healthcare-service
+    valueReference:
+      reference: HealthcareService/ecg
+id: ecg
+resourceType: ChargeItemDefinition
