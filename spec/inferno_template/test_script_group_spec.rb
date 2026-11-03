@@ -85,14 +85,14 @@ RSpec.describe InfernoTemplate::TestScriptGroup do
   end
 
   describe 'fixtures referenced by a path from the IG directory' do
-    let(:suite_id) { 'erezept_validator' }
-    let(:group) { suite.groups.find { |g| g.id.end_with?('-validate_e_rezept_ok') } }
+    let(:suite_id) { 'ch_elm' }
+    let(:group) { suite.groups.find { |g| g.id.end_with?('-Test100_Kosovo') } }
 
     it 'loads them in Setup' do
       run(group.tests.first, url:)
 
-      script = JSON.parse(File.read(File.join(suite.testscript_dir, 'validate-e-rezept-ok.json')))
-      expect(script['fixture'].map { |fixture| fixture.dig('resource', 'reference') }).to all(start_with('/examples/'))
+      script = JSON.parse(File.read(File.join(suite.testscript_dir, 'Test100-Kosovo.json')))
+      expect(script['fixture'].map { |fixture| fixture.dig('resource', 'reference') }).to all(start_with('/server/'))
       expect(results(group)['Setup'].then { |result| [result.result, result.result_message] }).to eq(['pass', nil])
     end
   end
